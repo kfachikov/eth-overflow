@@ -26,9 +26,9 @@ services:
       SCRIPT_NAME: "/pgadmin"
     labels:
       traefik.enable: true
-      traefik.http.routers.backend.entrypoints: web
-      traefik.http.routers.backend.rule: PathPrefix(`/pgadmin`)
-      traefik.http.services.backend.loadbalancer.server.port: 80
+      traefik.http.routers.pgadmin.entrypoints: web
+      traefik.http.routers.pgadmin.rule: PathPrefix(`/pgadmin`)
+      traefik.http.services.pgadmin.loadbalancer.server.port: 80
     restart: unless-stopped
 
   backend:
