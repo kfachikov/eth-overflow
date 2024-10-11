@@ -16,8 +16,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/newpost" element={<NewPost />} />
-        <Route path="/question" element={<Question />} />
-        <Route path="/userprofile" element={<UserProfile />} />
+        <Route path="/question/:question_id" element={<Question />} />
+        <Route path="/userprofile/:username" element={<UserProfile />} />
       </Routes>
     </>
   );
