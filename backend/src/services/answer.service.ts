@@ -5,10 +5,11 @@ import {AnswerCreateDto, AnswerUpdateDto} from '../model/answer.model';
 
 @Service()
 export class AnswerService {
-    async createAnswer(userId: number, answerCreateDto: AnswerCreateDto) {
+    async createAnswer(userId: number, questionId: number, answerCreateDto: AnswerCreateDto) {
         return await prisma.answer.create({
             data: {
                 authorId: userId,
+                questionId: questionId,
                 ...answerCreateDto
             },
         })

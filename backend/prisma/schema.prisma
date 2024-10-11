@@ -28,7 +28,8 @@ model Account {
 
   questions Question[]
   answers Answer[]
-  comments Comments[]
+  commentsOnQuestions CommentQuestion[]
+  commentsOnAnswers CommentAnswer[]
 
   votesOnQuestion VotesOnQuestion[]
   votesOnAnswer VotesOnAnswer[]
