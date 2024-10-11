@@ -43,6 +43,7 @@ model Question {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
+  score     Int      @default(0)
 
   createdAt DateTime @default(now())
   modifiedAt DateTime @default(now())
@@ -50,12 +51,14 @@ model Question {
   author    Account  @relation(fields: [authorId], references: [id])
   authorId  Int
 
-  selectedAnswer Answer? @relation("SelectedAnswerToQuestions", fields: [selectedAnswerId], references: [id])
+  selectedAnswer Answer? @relation("SelectedAnswerToQuestions", fields: [selectedAnswerId], references: [id], onDelete: SetNull)
   selectedAnswerId Int? @unique
 
   answers Answer[] @relation("AnswerToQuestion")
 
-  course Course? @relation(fields: [courseId], references: [id])
+  comments CommentQuestion[]
+
+  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
   courseId Int?
 
   votesOnQuestion VotesOnQuestion[]
@@ -71,6 +74,7 @@ model Course {
 model Answer {
   id        Int      @id @default(autoincrement())
   content   String
+  score     Int      @default(0)
 
   createdAt DateTime @default(now())
   modifiedAt DateTime @default(now())
@@ -78,25 +82,42 @@ model Answer {
   author    Account  @relation(fields: [authorId], references: [id])
   authorId  Int
 
-  question  Question @relation("AnswerToQuestion", fields: [questionId], references: [id])
+  question  Question @relation("AnswerToQuestion", fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int @unique
 
   selectedForQuestion  Question? @relation("SelectedAnswerToQuestions")
 
-  comments Comments[]
+  comments CommentAnswer[]
 
   votesOnAnswer VotesOnAnswer[]
 }
 
-model Comments {
+model CommentQuestion {
   id        Int      @id @default(autoincrement())
   content   String
 
   author    Account  @relation(fields: [authorId], references: [id])
   authorId  Int
 
-  answer    Answer?  @relation(fields: [answerId], references: [id])
-  answerId  Int?
+  question    Question?  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int?
+
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @default(now())
+}
+
+model CommentAnswer {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  author    Account  @relation(fields: [authorId], references: [id])
+  authorId  Int
+
+  answer    Answer  @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  answerId  Int
+
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @default(now())
 }
 
 model VotesOnQuestion {
@@ -106,7 +127,7 @@ model VotesOnQuestion {
   account   Account  @relation(fields: [accountId], references: [id])
   accountId Int
 
-  question  Question @relation(fields: [questionId], references: [id])
+  question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
 }
 
@@ -117,6 +138,6 @@ model VotesOnAnswer {
   account   Account  @relation(fields: [accountId], references: [id])
   accountId Int
 
-  answer    Answer @relation(fields: [answerId], references: [id])
+  answer    Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
   answerId  Int
 }
