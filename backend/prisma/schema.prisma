@@ -24,9 +24,99 @@ model Account {
   email    String  @unique
   name     String
   username String  @unique
+  karma    Int     @default(0)
+
+  questions Question[]
+  answers Answer[]
+  comments Comments[]
+
+  votesOnQuestion VotesOnQuestion[]
+  votesOnAnswer VotesOnAnswer[]
 }
 
 model Picture {
   id        Int @id @default(autoincrement())
   url       String
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @default(now())
+
+  author    Account  @relation(fields: [authorId], references: [id])
+  authorId  Int
+
+  selectedAnswer Answer? @relation("SelectedAnswerToQuestions", fields: [selectedAnswerId], references: [id])
+  selectedAnswerId Int? @unique
+
+  answers Answer[] @relation("AnswerToQuestion")
+
+  course Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+
+  votesOnQuestion VotesOnQuestion[]
+}
+
+model Course {
+  id        Int      @id @default(autoincrement())
+  name      String
+  
+  questions Question[]
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @default(now())
+
+  author    Account  @relation(fields: [authorId], references: [id])
+  authorId  Int
+
+  question  Question @relation("AnswerToQuestion", fields: [questionId], references: [id])
+  questionId Int @unique
+
+  selectedForQuestion  Question? @relation("SelectedAnswerToQuestions")
+
+  comments Comments[]
+
+  votesOnAnswer VotesOnAnswer[]
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  author    Account  @relation(fields: [authorId], references: [id])
+  authorId  Int
+
+  answer    Answer?  @relation(fields: [answerId], references: [id])
+  answerId  Int?
+}
+
+model VotesOnQuestion {
+  id        Int      @id @default(autoincrement())
+  upvote    Boolean
+
+  account   Account  @relation(fields: [accountId], references: [id])
+  accountId Int
+
+  question  Question @relation(fields: [questionId], references: [id])
+  questionId Int
+}
+
+model VotesOnAnswer {
+  id        Int      @id @default(autoincrement())
+  upvote    Boolean
+
+  account   Account  @relation(fields: [accountId], references: [id])
+  accountId Int
+
+  answer    Answer @relation(fields: [answerId], references: [id])
+  answerId  Int
 }
