@@ -1,15 +1,25 @@
 import './App.css';
-import AppHeader from "./components/AppHeader";
-import Todo from "./components/Todo";
+
+import {Routes, Route} from "react-router-dom";
+import Home from "./Home/Home";
+import Login from "./Login/Login";
+import NewPost from "./NewPost/NewPost";
+import Question from "./Question/Question";
+import UserProfile from "./UserProfile/UserProfile";
+
 
 function App() {
 
-
   return (
-    <div className="App">
-        <AppHeader/>
-        <Todo/>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/newpost" element={<NewPost />} />
+        <Route path="/question" element={<Question />} />
+        <Route path="/userprofile" element={<UserProfile />} />
+      </Routes>
+    </>
   );
 }
 
