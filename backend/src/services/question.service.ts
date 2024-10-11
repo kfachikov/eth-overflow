@@ -1,7 +1,7 @@
 import prisma from '../../prisma';
 
 import { Service } from 'typedi';
-import { QuestionCreateDto } from '../model/question.model';
+import { QuestionCreateDto, QuestionUpdateData } from '../model/question.model';
 
 @Service()
 export class QuestionService {
@@ -14,7 +14,7 @@ export class QuestionService {
         })
     }
 
-    async updateQuestion(questionId: number, questionUpdateDto: QuestionCreateDto) {
+    async updateQuestion(questionId: number, questionUpdateDto: QuestionUpdateData) {
         return await prisma.question.update({
             where: {
                 id: questionId,
