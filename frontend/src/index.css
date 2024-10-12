@@ -1,41 +1,35 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 :root {
   --white: #fff;
   --black: #000;
-  --gray10: #F1F1F1;
-  --gray20: #E2E2E2;
-  --gray40: #C5C5C5;
-  --gray60: #A9A9A9;
-  --gray80: #8C8C8C;
+  --gray10: #f1f1f1;
+  --gray20: #e2e2e2;
+  --gray40: #c5c5c5;
+  --gray60: #a9a9a9;
+  --gray80: #8c8c8c;
   --gray: #575757;
-  --purple10: #F8E8F3;
-  --purple20: #EFD0E3;
-  --purple40: #DC9EC9;
-  --purple60: #CA6CAE;
-  --purple80: #B73B92;
-  --purple: #A7117A;
-  --purple120:	#8C0A59;
+  --purple10: #f8e8f3;
+  --purple20: #efd0e3;
+  --purple40: #dc9ec9;
+  --purple60: #ca6cae;
+  --purple80: #b73b92;
+  --purple: #a7117a;
+  --purple120: #8c0a59;
 }
 
-
-.eth-logo{
-  position: absolute;
-  top: 0;
-  left: 0;
+.logout-item {
   height: 5em;
-  object-fit: cover;
-  opacity: 1;
 }
