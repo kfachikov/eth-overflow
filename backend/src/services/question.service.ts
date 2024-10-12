@@ -94,4 +94,15 @@ export class QuestionService {
             }
         })
     }
+
+    async selectBestAnswer(questionId: number, answerId: number) {
+        return prisma.question.update({
+            where: {
+                id: questionId,
+            },
+            data: {
+                selectedAnswerId: answerId,
+            }
+        })
+    }
 }
