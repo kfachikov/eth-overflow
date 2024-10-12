@@ -11,10 +11,8 @@ export class QuestionController {
 
     @Get('/')
     async createQuestion(@Body() questionCreateDto: QuestionCreateDto, @Req() req: Request) {
-        console.log("in create question, req: ", req)
         // @ts-ignore
         const userId = req.userId;
-        console.log("in create question : ", userId);
         return await this.questionService.createQuestion(userId, questionCreateDto);
     }
 
