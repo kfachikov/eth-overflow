@@ -134,4 +134,6 @@ model VotesOnAnswer {
 
   answer    Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
   answerId  Int
+
+  @@unique([accountId, answerId])
 }

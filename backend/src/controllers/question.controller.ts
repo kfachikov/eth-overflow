@@ -1,7 +1,8 @@
 import {Delete, JsonController, Post, Put, Req, Body, Get, Param} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
-import {QuestionCreateDto, QuestionUpdateDto, QuestionVoteDto} from '../model/question.model';
+import {QuestionCreateDto, QuestionUpdateDto} from '../model/question.model';
+import {VoteDto} from "../model/vote.model";
 import { Request } from 'express';
 import {VoteQuestionService} from "../services/vote-question.service";
 
@@ -38,10 +39,10 @@ export class QuestionController {
     }
 
     @Put('/:questionId/vote')
-    async voteForQuestion(@Param('questionId') questionId: number, @Body() questionVoteDto: QuestionVoteDto, @Req() req: Request) {
+    async voteForQuestion(@Param('questionId') questionId: number, @Body() voteDto: VoteDto, @Req() req: Request) {
         // @ts-ignore
         const userId = req.userId;
-        const change = await this.voteQuestionService.voteQuestion(userId, questionId, questionVoteDto);
+        const change = await this.voteQuestionService.voteQuestion(userId, questionId, voteDto);
 
         return await this.questionService.updateScore(questionId, change);
     }

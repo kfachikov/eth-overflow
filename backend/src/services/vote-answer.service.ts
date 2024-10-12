@@ -4,13 +4,13 @@ import { Service } from 'typedi';
 import {VoteDto} from "../model/vote.model";
 
 @Service()
-export class VoteQuestionService {
-    async voteQuestion(userId: number, questionId: number, voteDto: VoteDto) {
-        const vote = await prisma.votesOnQuestion.findUnique({
+export class VoteAnswerService {
+    async voteAnswer(userId: number, answerId: number, voteDto: VoteDto) {
+        const vote = await prisma.votesOnAnswer.findUnique({
             where: {
-                accountId_questionId: {
+                accountId_answerId: {
                     accountId: userId,
-                    questionId: questionId,
+                    answerId: answerId,
                 },
             },
         })
@@ -19,20 +19,20 @@ export class VoteQuestionService {
         const finalScore = voteDto.score
 
         if (finalScore == 0) {
-            await prisma.votesOnQuestion.delete({
+            await prisma.votesOnAnswer.delete({
                 where: {
-                    accountId_questionId: {
+                    accountId_answerId: {
                         accountId: userId,
-                        questionId: questionId,
+                        answerId: answerId,
                     },
                 }
             })
         } else if (vote) {
-            await prisma.votesOnQuestion.update({
+            await prisma.votesOnAnswer.update({
                 where: {
-                    accountId_questionId: {
+                    accountId_answerId: {
                         accountId: userId,
-                        questionId: questionId,
+                        answerId: answerId,
                     },
                 },
                 data: {
@@ -40,10 +40,10 @@ export class VoteQuestionService {
                 }
             })
         } else {
-            await prisma.votesOnQuestion.create({
+            await prisma.votesOnAnswer.create({
                 data: {
                     accountId: userId,
-                    questionId: questionId,
+                    answerId: answerId,
                     upvote: finalScore == 1,
                 }
             })
