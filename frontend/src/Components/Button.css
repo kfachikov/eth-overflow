@@ -1,0 +1,45 @@
+.button {
+    background-color: var(--purple);
+    color: white;
+    font-family: Arial;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.button:hover {
+    background-color: var(--purple120);
+}
+
+.button:active {
+    background-color: var(--purple80);
+}
+
+.small {
+    font-size: 12px;
+    padding: 10px 10px;
+    margin: 4px 2px;
+}
+
+.medium {
+    font-size: 16px;
+    padding: 15px 15px;
+    margin: 4px 2px;
+}
+
+.large {
+    font-size: 20px;
+    padding: 20px 20px;
+    margin: 4px 2px;
+}
+
+.delete {
+    background-color: red;
+}
+
+.delete:hover {
+    background-color: darkred;
+}
