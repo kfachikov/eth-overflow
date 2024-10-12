@@ -30,10 +30,12 @@ export class QuestionController {
     }
 
     @Get('/all')
-    async getAllQuestions(@QueryParams() params: SearchPhraseQueryParams<void>) {
+    async getAllQuestions(@QueryParams() params: SearchQuestionQueryParams) {
+        console.log(JSON.stringify(params));
         params.offset = +params.offset;
         params.limit = +params.limit;
-        return await this.questionService.getAllQuestions(params.search, params.offset, params.limit);
+        const tags = params.tags ? params.tags.split(',') : [];
+        return await this.questionService.getAllQuestions(params.search, tags, params.offset, params.limit);
     }
 
     @Get('/:questionId')

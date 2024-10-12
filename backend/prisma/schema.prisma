@@ -75,7 +75,7 @@ model Answer {
   authorId  Int
 
   question  Question @relation("AnswerToQuestion", fields: [questionId], references: [id], onDelete: Cascade)
-  questionId Int @unique
+  questionId Int
 
   selectedForQuestion  Question? @relation("SelectedAnswerToQuestions")
 
