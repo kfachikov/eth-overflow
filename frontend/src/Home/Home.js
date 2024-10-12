@@ -2,45 +2,32 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../Components/SearchBar/SearchBar';  // Import your SearchBar component
 import QuestionCard from '../Components/QuestionCard/QuestionCard';  // Import your QuestionCard component
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
+import { getQuestions } from '../services/questionService';  // Import your API function
 import './Home.css';
 
 const HomePage = () => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
-  const [filteredQuestions, setFilteredQuestions] = useState([]); // For filtered results
   const [searchTerm, setSearchTerm] = useState(''); // Track search term
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size
 
-  // Simulated questions data
-  const allQuestions = [
-    { id: 1, title: "How does React manage state?", content: "React uses state...", username: "john_doe", timestamp: "2 hours ago" },
-    { id: 2, title: "What is the virtual DOM?", content: "The virtual DOM...", username: "jane_smith", timestamp: "1 hour ago" },
-    // Add more questions here...
-  ];
-
-  // Fetch questions (simulating API call)
-  const fetchQuestions = async () => {
-    setLoading(true);
-    try {
-      const paginatedQuestions = allQuestions.slice(offset, offset + pageSize); // Paginate
-      setQuestions(paginatedQuestions);
-      setFilteredQuestions(paginatedQuestions); // Initially, no filter
-    } catch (error) {
-      console.error('Error fetching questions:', error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
-    fetchQuestions();
-  }, [offset]);
+    setLoading(true);
+    getQuestions(searchTerm, offset, pageSize).then((data) => {
+      console.log(data);
+      setQuestions(data);
+      setLoading(false);
+    });
+
+    console.log(questions.length);
+    console.log(pageSize);
+    console.log(questions.length < pageSize);
+  }, [offset, searchTerm]);
 
   // Handle search
   const handleSearch = (term) => {
     setSearchTerm(term);
-    const filtered = questions.filter((q) => q.title.toLowerCase().includes(term.toLowerCase()));
-    setFilteredQuestions(filtered);
   };
 
   // Pagination handlers
@@ -72,8 +59,8 @@ const HomePage = () => {
         <p>Loading...</p>
       ) : (
         <div className="question-list">
-          {filteredQuestions.length > 0 ? (
-            filteredQuestions.map((question) => (
+          {questions.length > 0 ? (
+            questions.map((question) => (
               <QuestionCard key={question.id} data={question} />
             ))
           ) : (
@@ -83,7 +70,7 @@ const HomePage = () => {
           {/* Pagination Controls */}
           <div className="pagination-controls">
             <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-            <button onClick={handleNext} disabled={filteredQuestions.length < pageSize}>Next</button>
+            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
           </div>
         </div>
       )}

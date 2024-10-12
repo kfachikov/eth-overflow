@@ -30,4 +30,26 @@ export class QuestionService {
             },
         });
     }
+
+    async getAllQuestions(search: string, offset: number, limit: number) {
+        console.log('searching!');
+        return await prisma.question.findMany({
+            where: {
+                OR: [
+                    {
+                        title: {
+                            contains: search,
+                        },
+                    },
+                    {
+                        content: {
+                            contains: search,
+                        },
+                    },
+                ],
+            },
+            skip: offset,
+            take: limit,
+        });
+    }
 }

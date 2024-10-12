@@ -9,3 +9,10 @@ export class QuestionUpdateDto {
     content?: string;
     courseId?: number;
 }
+
+export class SearchQuestionQueryParams {
+    search = '';
+    offset = 0;
+    limit = 10;
+    tags: string[] = [];
+}

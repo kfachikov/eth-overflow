@@ -15,15 +15,7 @@ export class CorsService {
      * @returns the created layout
      */
     async isOriginAllowed(origin: string): Promise<boolean> {
-        if (!this.allowedOrigins) {
-            this.allowedOrigins = await this.getAllowedOrigins();
-        }
-
-        if (this.allowedOrigins.includes(origin)) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
