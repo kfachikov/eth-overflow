@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import VoteButton from '../VoteButton/VoteButton';
 import './PostCard.css';
+import {voteQuestion} from "../../services/questionService";
+import {voteAnswer} from "../../services/answerService";
 
 const Vote = Object.freeze({
   UPVOTE: 1,
@@ -16,14 +18,28 @@ const PostCard = (props) => {
   const [score, setScore] = useState(post.score)
 
   const handleVote = (vote) => {
-    const voteDelta = vote - voteState
-    setScore(score + voteDelta)
     setVoteState(vote);
   };
 
   const handleSelectBest = () => {
     setIsBestAnswer(!isBestAnswer);
   }
+
+  useEffect(() => {
+    if (voteState === undefined)
+      return;
+
+    if (post.isQuestion) {
+      voteQuestion(post.postId, voteState).then((response) => {
+        setScore(response.data.score)
+      });
+    } else {
+      // TODO: check whether answerId exists
+      voteAnswer(post.postId, post.answerId, voteState).then((response) => {
+        setScore(response.data.score)
+      });
+    }
+  }, [voteState]);
 
   return (
     <div className={"post-card" + (isBestAnswer ? " selected-answer-card" : "")}>
@@ -39,10 +55,13 @@ const PostCard = (props) => {
           onClick={() => handleVote(voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL)}
           isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
         />
-        {isBestAnswer ? 
-          <div onClick={handleSelectBest} className="selected-checkmark">✔</div> : 
-          <div onClick={handleSelectBest} className="unselected-checkmark">✔</div>
-        }
+        {!post.isQuestion && (
+            isBestAnswer ? (
+                <div onClick={handleSelectBest} className="selected-checkmark">✔</div>
+            ) : (
+                <div onClick={handleSelectBest} className="unselected-checkmark">✔</div>
+            )
+        )}
       </div>
 
       <div className="post-body">
