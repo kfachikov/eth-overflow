@@ -5,7 +5,7 @@ import { Service } from 'typedi';
 @Service()
 export class AccountService {
     async getUserByEmail(email: string) {
-        return await prisma.account.findFirst({
+        return prisma.account.findUnique({
             where: {
                 email: email,
             },

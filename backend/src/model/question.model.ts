@@ -9,3 +9,7 @@ export class QuestionUpdateDto {
     content?: string;
     tags?: number[];
 }
+
+export class QuestionVoteDto {
+    score: number;
+}
