@@ -12,8 +12,7 @@ export const attachToken = (request) => {
 };
 
 export const setAccessToken = (response) => {
-  console.log(response);
-  let token = response.headers.Authorization;
+  let token = response.headers.authorization;
   token = token ? token.split(' ')[1] : null;
 
   localStorage.setItem('access_token', token);
