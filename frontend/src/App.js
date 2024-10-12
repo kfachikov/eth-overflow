@@ -6,12 +6,9 @@ import NewPost from "./NewPost/NewPost";
 import Question from "./Question/Question";
 import UserProfile from "./UserProfile/UserProfile";
 import HomePage from './Home/Home';
-import HomeT from './Home/HomeT';
 import PostModel from "./Models/PostModel";
 import TagModel from "./Models/TagModel";
 import PostCard from './Components/PostCard/PostCard';
-import Button from './Components/Button';
-import { ButtonSize } from './Components/Button';
 
 function App() {
   var tag = new TagModel(0, "tag-1300")
@@ -35,13 +32,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/homeT" element={<HomeT />} />
         <Route path="/newpost" element={<NewPost />} />
         <Route path="/question/:question_id" element={<Question />} />
         <Route path="/userprofile/:username" element={<UserProfile />} />
       </Routes>
-      
-      <PostCard post={question} thisVote={0} isCollapsed={true}></PostCard>
     </>
   );
 }

@@ -6,7 +6,7 @@ import {CommentAnswerCreateDto, CommentAnswerUpdateDto} from '../model/comment-a
 @Service()
 export class CommentAnswerService {
     async createCommentAnswer(userId: number, answerId: number, commentAnswerCreateDto: CommentAnswerCreateDto) {
-        return prisma.commentAnswer.create({
+        return await prisma.commentAnswer.create({
             data: {
                 authorId: userId,
                 answerId: answerId,
@@ -16,7 +16,7 @@ export class CommentAnswerService {
     }
 
     async updateCommentAnswer(commentAnswerId: number, commentAnswerUpdateDto: CommentAnswerUpdateDto) {
-        return prisma.commentAnswer.update({
+        return await prisma.commentAnswer.update({
             where: {
                 id: commentAnswerId,
             },
@@ -25,7 +25,7 @@ export class CommentAnswerService {
     }
 
     async deleteCommentAnswer(commentAnswerId: number) {
-        return prisma.commentAnswer.delete({
+        return await prisma.commentAnswer.delete({
             where: {
                 id: commentAnswerId,
             },

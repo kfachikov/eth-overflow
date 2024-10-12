@@ -1,8 +1,9 @@
-import {Delete, JsonController, Post, Put, Req, Body, Get, Param} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Req, Body, QueryParams, Param, Get} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
-import { QuestionCreateDto, QuestionUpdateDto } from '../model/question.model';
+import { QuestionCreateDto, QuestionUpdateDto, SearchQuestionQueryParams } from '../model/question.model';
 import { Request } from 'express';
+import { SearchPhraseQueryParams } from '../model/common.model';
 
 @JsonController('/questions')
 @Service()
@@ -26,6 +27,13 @@ export class QuestionController {
         return await this.questionService.deleteQuestion(questionId);
     }
 
+    @Get('/all')
+    async getAllQuestions(@QueryParams() params: SearchPhraseQueryParams<void>) {
+        params.offset = +params.offset;
+        params.limit = +params.limit;
+        return await this.questionService.getAllQuestions(params.search, params.offset, params.limit);
+    }
+    
     @Get('/:questionId')
     async getQuestionById(@Param('questionId') questionId: number) {
         return await this.questionService.getQuestionWithAnswers(questionId);
