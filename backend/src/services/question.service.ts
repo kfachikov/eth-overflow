@@ -32,7 +32,6 @@ export class QuestionService {
     }
 
     async getAllQuestions(search: string, offset: number, limit: number) {
-        console.log('searching!');
         return await prisma.question.findMany({
             where: {
                 OR: [

@@ -14,15 +14,10 @@ const HomePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, offset, pageSize).then((data) => {
-      console.log(data);
-      setQuestions(data);
+    getQuestions(searchTerm, offset, pageSize).then((response) => {
+      setQuestions(response.data);
       setLoading(false);
     });
-
-    console.log(questions.length);
-    console.log(pageSize);
-    console.log(questions.length < pageSize);
   }, [offset, searchTerm]);
 
   // Handle search
