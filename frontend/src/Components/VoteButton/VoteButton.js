@@ -1,19 +1,15 @@
 import React from 'react';
-import './VoteButton.css'; // Optional for styling if not using inline CSS
+import './VoteButton.css';
 
-const VoteButton = ({ isUpvote, onClick }) => {
-  const [clicked, setClicked] = React.useState(false);
+const VoteButton = ({ isUpvote, onClick, isClicked }) => {
+  // No internal state for clicked status, rely on the isClicked prop
   const handleClick = () => {
-    setClicked(!clicked);
-    
-    if (onClick) {
-        onClick(isUpvote, clicked); // Invoke the function with the boolean state
-    }
+    onClick(isUpvote);
   };
 
   return (
     <div
-      className={`triangle ${isUpvote ? 'up' : 'down'} ${clicked ? 'active' : ''}`}
+      className={`triangle ${isUpvote ? 'up' : 'down'} ${isClicked ? 'active' : ''}`}
       onClick={handleClick}
     />
   );
