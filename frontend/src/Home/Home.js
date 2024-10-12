@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../Components/SearchBar/SearchBar';  // Import your SearchBar component
+import SearchTag from '../Components/SearchTag/SearchTag';  // Import your TagSearch component
 import QuestionCard from '../Components/QuestionCard/QuestionCard';  // Import your QuestionCard component
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
 import { getQuestions } from '../services/questionService';  // Import your API function
@@ -46,8 +47,9 @@ const HomePage = () => {
       </div>
 
       <div className="Bars">
-        <SearchBar onSearch={handleSearch}/>
+        <SearchTag/>
       </div>
+
       <div className = "filterSwitch">
         <ToggleOptions
           options={['Newest', 'Hot']}

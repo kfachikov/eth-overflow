@@ -28,7 +28,9 @@ export class QuestionController {
     }
 
     @Get('/all')
-    async getAllQuestions(@QueryParams() params: SearchQuestionQueryParams) {
+    async getAllQuestions(@QueryParams() params: SearchPhraseQueryParams<void>) {
+        params.offset = +params.offset;
+        params.limit = +params.limit;
         return await this.questionService.getAllQuestions(params.search, params.offset, params.limit);
     }
 }
