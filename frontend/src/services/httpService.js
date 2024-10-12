@@ -11,6 +11,15 @@ export const attachToken = (request) => {
   return request;
 };
 
+export const setAccessToken = (response) => {
+  let token = response.headers.authorization;
+  token = token ? token.split(' ')[1] : null;
+
+  localStorage.setItem('access_token', token);
+  return response;
+};
+
+httpService.interceptors.response.use(setAccessToken);
 httpService.interceptors.request.use(attachToken);
 
 export default httpService;
