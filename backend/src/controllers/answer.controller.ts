@@ -29,7 +29,7 @@ export class AnswerController {
     }
 
     @Put('/:answerId/vote')
-    async voteForQuestion(@Param('answerId') answerId: number, @Body() voteDto: VoteDto, @Req() req: Request) {
+    async voteForAnswer(@Param('answerId') answerId: number, @Body() voteDto: VoteDto, @Req() req: Request) {
         // @ts-ignore
         const userId = req.userId;
         const change = await this.voteAnswerService.voteAnswer(userId, answerId, voteDto);

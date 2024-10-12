@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-bar">
+    <div className={`search-bar`}>
       <input
         type="text"
         value={searchTerm}

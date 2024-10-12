@@ -10,6 +10,13 @@ export class QuestionUpdateDto {
     tags?: number[];
 }
 
+export class SearchQuestionQueryParams {
+    search = '';
+    offset = '0';
+    limit = '10';
+    tags: string[] = [];
+}
+
 export class SelectAnswerDto {
     answerId: number;
 }
