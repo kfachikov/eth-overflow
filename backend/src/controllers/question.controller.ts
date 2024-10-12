@@ -1,7 +1,8 @@
-import {Delete, JsonController, Get, Put, Req} from 'routing-controllers';
+import {Delete, JsonController, Get, Put, Req, Body} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
 import { QuestionCreateDto, QuestionUpdateDto } from '../model/question.model';
+import { Request } from 'express';
 
 @JsonController('/questions')
 @Service()
@@ -9,7 +10,7 @@ export class QuestionController {
     constructor(private questionService: QuestionService) {}
 
     @Get('/')
-    async createQuestion(questionCreateDto: QuestionCreateDto, @Req() req: Request) {
+    async createQuestion(@Body() questionCreateDto: QuestionCreateDto, @Req() req: Request) {
         console.log("in create question, req: ", req)
         // @ts-ignore
         const userId = req.userId;
