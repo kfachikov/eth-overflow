@@ -48,7 +48,7 @@ export const getTags = (search) => {
     ]
 };
   
-export const createTag = async (data) => {
+export const createTag = (data) => {
     console.log(data);
     // return await httpService.post('/tags', data);
     return { data: { id: 11, name: data.name } };

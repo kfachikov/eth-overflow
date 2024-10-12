@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 import { createTag, getTags } from '../../services/tagService';
 
 const TagSearch = () => {
@@ -14,7 +14,7 @@ const TagSearch = () => {
 
   const fetchTags = async () => {
     try {
-      const data = getTags();
+      const data = await getTags(); // Await the result of fetching tags
       setOptions(data.map(tag => ({ label: tag.name, value: tag.id })));
     } catch (error) {
       console.error('Error fetching tags', error);
@@ -41,33 +41,37 @@ const TagSearch = () => {
         setSelectedTags((prevSelectedTags) => [...prevSelectedTags, existingTag]);
       } else {
         // Tag doesn't exist, create it through API
-        const newTag = handleCreateTag(inputValue);
-        setSelectedTags((prevSelectedTags) => [...prevSelectedTags, newTag]);
-        setOptions([...options, newTag]);
+        const newTag = await handleCreateTag(inputValue); // Await tag creation
+        if (newTag) {
+          setSelectedTags((prevSelectedTags) => [...prevSelectedTags, newTag]);
+          setOptions((prevOptions) => [...prevOptions, newTag]); // Add new tag to options
+        }
       }
       setInputValue(''); // Reset input field
     }
   };
 
   // Function to create a new tag via an API call
-  const handleCreateTag = (tagName) => {
+  const handleCreateTag = async (tagName) => {
     try {
-      const response = createTag({ name: tagName }); // Call API to create new tag
+      const response = await createTag({ name: tagName }); // Await the API response
+      console.log('New tag created:', response);
       return { label: response.data.name, value: response.data.id }; // Return the new tag object
     } catch (error) {
       console.error('Error creating new tag', error);
+      return null;
     }
   };
 
+  // Custom filter for partial matches
   const customFilter = (option, inputValue) => {
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
 
   return (
     <div>
-      <CreatableSelect
+      <Select
         isMulti
-        createOptionPosition="first"
         value={selectedTags}
         options={options}
         onInputChange={handleInputChange}
@@ -76,7 +80,7 @@ const TagSearch = () => {
         onKeyDown={handleKeyDown}
         placeholder="Search or create tags..."
         noOptionsMessage={() => 'No tags found'}
-        filterOption={customFilter}
+        filterOption={customFilter} // Apply the custom filter
       />
     </div>
   );
