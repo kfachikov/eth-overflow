@@ -10,6 +10,7 @@ export class QuestionController {
 
     @Get('/')
     async createQuestion(questionCreateDto: QuestionCreateDto, @Req() req: Request) {
+        console.log("in create question, req: ", req)
         // @ts-ignore
         const userId = req.userId;
         console.log("in create question : ", userId);
