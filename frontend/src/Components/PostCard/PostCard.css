@@ -2,17 +2,16 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   margin: 16px 0px;
-  width: 70%;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;               /* Enables flexbox */
   align-items: center;          /* Centers items vertically */
+  background-color: var(--white);
 }
 
 .selected-answer-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   margin: 16px 0px;
-  width: 70%;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;               /* Enables flexbox */
   align-items: center;         /* Centers items vertically */
@@ -80,6 +79,11 @@
   align-items: center;          /* Centers items vertically */
 }
 
+.tags-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tag {
   font-size: 11px;
   padding: 4px 4px;
@@ -87,6 +91,7 @@
   border-radius: 4px;
   background-color: var(--purple40);
   color: var(--black);
+  text-wrap: nowrap;
   cursor: pointer;
 }
 

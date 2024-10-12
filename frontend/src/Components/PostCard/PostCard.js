@@ -26,7 +26,7 @@ const PostCard = (props) => {
   }
 
   return (
-    <div className={"post-card" + post.isBestAnswer ? " selected-answer-card" : ""}>
+    <div className={"post-card" + (isBestAnswer ? " selected-answer-card" : "")}>
       <div className="vote-buttons">
         <VoteButton
           isUpvote={true}

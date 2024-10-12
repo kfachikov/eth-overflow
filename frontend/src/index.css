@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--gray10);
 }
 
 code {
@@ -33,31 +34,48 @@ code {
 .logout-icon {
   margin-right: 0;
   padding: 1em;
-  width: 3em;
-  height: 3em;
+  width: 2em;
+  height: 2em;
 }
 
 .eth-logo {
-  padding: 1em;
-  height: 3em;
-  margin-left: 0;
-}
-
-.header-title {
-  margin-left: 0;
-  font-size: 3em;
-  font-weight: normal;
+  width: 30%;
+  max-width: 1000px; /* Logo width is 20% of the viewport width */
 }
 
 .header {
+  padding: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.ETHoverflow {
+.canvas {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  flex-direction: column;
+}
+
+.page-container {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .page-content {
+    width: 100%;
+    height: auto;
+    background-color: var(--white);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-content {
+    width: 1024px;
+    height: auto;
+    background-color: var(--white);
+  }
 }
