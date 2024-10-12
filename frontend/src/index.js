@@ -8,8 +8,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <img className= "eth-logo" src="eth_logo_kurz_pos.png" alt="Background" />
-      <img className="logout-icon" src="logout_icon.svg" alt="Logout" />
+      <div className="header">
+        <div className = "gleich">
+          <div><img className="eth-logo" src="eth_logo_kurz_kurz.png" alt="Background" /></div>
+          <div className="header-title">Overflow</div>
+        </div>
+        <div ><img className="logout-icon" src="logout_icon.svg" alt="Logout" /></div>
+      </div>
+
       <App />
     </Router>
   </React.StrictMode>

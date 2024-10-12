@@ -31,16 +31,33 @@ code {
 }
 
 .logout-icon {
-  float: right;
+  margin-right: 0;
   padding: 1em;
   width: 3em;
   height: 3em;
 }
 
 .eth-logo {
-  position: absolute;
   padding: 1em;
-  top: 0;
-  left: 0;
   height: 3em;
+  margin-left: 0;
+}
+
+.header-title {
+  margin-left: 0;
+  font-size: 3em;
+  font-weight: normal;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gleich {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
