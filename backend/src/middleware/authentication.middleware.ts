@@ -46,6 +46,10 @@ export class AuthenticationMiddleware implements ExpressMiddlewareInterface {
             console.log("decoded:::  ---- ", decoded);
             console.log("token:     --- ", token)
 
+            // @ts-ignore
+            const { userId } = token;
+            console.log("user id: ", userId)
+
             res.setHeader('Authorization', `Bearer ${token}`);
             res.locals.token = token;
         }
