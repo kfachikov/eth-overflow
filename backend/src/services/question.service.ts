@@ -49,7 +49,7 @@ export class QuestionService {
         });
     }
 
-    async getAllQuestions(search: string, tags: string[], offset: number, limit: number, orderByField?: string) {
+    async getAllQuestions(search: string, tags: string[], offset: number, limit: number, orderByField: string) {
         return prisma.question.findMany({
             where: {
                 OR: [
@@ -74,11 +74,9 @@ export class QuestionService {
                     }))
                 }),
             },
-            orderBy: orderByField
-                ? {
-                    [orderByField]: 'desc',
-                }
-                : undefined,
+            orderBy: {
+                [orderByField]: 'desc',
+            },
             skip: offset,
             take: limit,
             include: {

@@ -15,7 +15,7 @@ export class SearchQuestionQueryParams {
     offset = 0;
     limit = 10;
     tags = '';
-    order: "createdAt" | "score" | undefined = undefined;
+    order: "createdAt" | "score" = "createdAt";
 }
 
 export class SelectAnswerDto {
