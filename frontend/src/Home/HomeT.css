@@ -1,0 +1,36 @@
+.outer-grid-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 2;
+    row-gap: 1em;
+  }
+  .interactionArea {
+    /*as a child*/
+    grid-row-start: 1;
+    grid-row-end: 1;
+    /*as a parent*/
+    display: grid;
+    grid-template-columns: auto 30%;
+    grid-template-rows: 3;
+  }
+  .questionCardArea {
+    /*as a child*/
+    grid-row-start: 2;
+    grid-row-end: 2;
+    /*as a parent*/
+    display: flex;
+    flex-direction: column;
+    flex-flow: column;
+  }
+  .searchBar {
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+  .bigBadBunnyButton {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 2;
+  }

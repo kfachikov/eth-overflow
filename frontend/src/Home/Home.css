@@ -1,36 +1,53 @@
-.outer-grid-container {
-  display: grid;
-  grid-template-columns: 1;
-  grid-template-rows: 2;
-  row-gap: 1em;
-}
-.interactionArea {
-  /*as a child*/
-  grid-row-start: 1;
-  grid-row-end: 1;
-  /*as a parent*/
-  display: grid;
-  grid-template-columns: auto 30%;
-  grid-template-rows: 3;
-}
-.questionCardArea {
-  /*as a child*/
-  grid-row-start: 2;
-  grid-row-end: 2;
-  /*as a parent*/
-  display: flex;
-  flex-direction: column;
-  flex-flow: column;
-}
-.searchBar {
-  grid-row-start: 1;
-  grid-row-end: 1;
-  grid-column-start: 1;
-  grid-column-end: 1;
-}
-.bigBadBunnyButton {
-  grid-row-start: 1;
-  grid-row-end: 3;
-  grid-column-start: 2;
-  grid-column-end: 2;
-}
+.home-page {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .vote-toggle {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .create-question {
+    text-align: right;
+    margin: 20px 0;
+  }
+  
+  .create-question button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .create-question button:hover {
+    background-color: #218838;
+  }
+  
+  .question-list {
+    margin: 20px 0;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .pagination-controls button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
