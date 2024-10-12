@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../Components/SearchBar/SearchBar';  // Import your SearchBar component
-import QuestionCard from '../Components/QuestionCard/QuestionCard';  // Import your QuestionCard component
+import PostCard from '../Components/PostCard/PostCard';
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
 import './Home.css';
 
@@ -74,7 +74,7 @@ const HomePage = () => {
         <div className="question-list">
           {filteredQuestions.length > 0 ? (
             filteredQuestions.map((question) => (
-              <QuestionCard key={question.id} data={question} />
+              <PostCard key={question.id} data={question} />
             ))
           ) : (
             <p>No questions found.</p>
