@@ -31,6 +31,11 @@
   background: #f9f9f9;
 }
 
+.notification-confirmation {
+  display: flex;
+  align-items: center;
+}
+
 .form-actions {
   display: flex;
   justify-content: space-between;
