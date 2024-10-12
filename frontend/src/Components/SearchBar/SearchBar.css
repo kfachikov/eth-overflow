@@ -9,11 +9,8 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  outline: auto;
-  outline-color: #a7117a;
-  outline-width: 10px;
 }
 
-.search-bar ::placeholder {
-  color: black;
+.search-bar input:focus {
+  outline: 2px solid var(--purple60);
 }
