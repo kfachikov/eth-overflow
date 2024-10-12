@@ -1,4 +1,4 @@
-import {Delete, JsonController, Post, Put, Param} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Param, Get} from 'routing-controllers';
 import { Service } from 'typedi';
 import {AnswerService} from "../services/answer.service";
 import {AnswerCreateDto, AnswerUpdateDto} from "../model/answer.model";
@@ -8,7 +8,7 @@ import {AnswerCreateDto, AnswerUpdateDto} from "../model/answer.model";
 export class AnswerController {
     constructor(private answerService: AnswerService) {}
 
-    @Post('/')
+    @Get('/')
     async createAnswer(@Param('questionId') questionId: number, answerCreateDto: AnswerCreateDto) {
         const userId = 1;
         return await this.answerService.createAnswer(userId, questionId, answerCreateDto);

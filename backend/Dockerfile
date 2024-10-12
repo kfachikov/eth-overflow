@@ -12,4 +12,4 @@ COPY . .
 
 RUN npx prisma generate
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npx prisma db push --force-reset && npm run start"]
