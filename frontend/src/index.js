@@ -9,7 +9,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <p>Hello</p>
+      <img
+        src = "eth_logo_kurz_pos.svg"
+        alt="Background"
+      />
       <App />
     </Router>
   </React.StrictMode>
