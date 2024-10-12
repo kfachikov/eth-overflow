@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import VoteButton from '../VoteButton/VoteButton';
 import './PostCard.css';
-import Button from '../Button';
-import { ButtonSize } from '../Button';
 
 const Vote = Object.freeze({
   UPVOTE: 1,
@@ -13,9 +11,8 @@ const Vote = Object.freeze({
 const PostCard = (props) => {
   const { post, thisVote, isCollapsed } = props;
   
-  console.log(post.score)
   const [voteState, setVoteState] = useState(thisVote);
-  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer);
+  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
   const [score, setScore] = useState(post.score)
 
   const handleVote = (vote) => {

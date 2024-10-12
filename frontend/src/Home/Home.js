@@ -1,46 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../Components/SearchBar/SearchBar';  // Import your SearchBar component
+import SearchTag from '../Components/SearchTag/SearchTag';  // Import your TagSearch component
 import PostCard from '../Components/PostCard/PostCard';
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
+import { getQuestions } from '../services/questionService';  // Import your API function
+import { parsePostFromJSON } from '../Models/PostModel';  // Import your parse function
 import './Home.css';
 
 const HomePage = () => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
-  const [filteredQuestions, setFilteredQuestions] = useState([]); // For filtered results
   const [searchTerm, setSearchTerm] = useState(''); // Track search term
+  const [tags, setTags] = useState([]); // Track selected tags
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size
 
-  // Simulated questions data
-  const allQuestions = [
-    { id: 1, title: "How does React manage state?", content: "React uses state...", username: "john_doe", timestamp: "2 hours ago" },
-    { id: 2, title: "What is the virtual DOM?", content: "The virtual DOM...", username: "jane_smith", timestamp: "1 hour ago" },
-    // Add more questions here...
-  ];
-
-  // Fetch questions (simulating API call)
-  const fetchQuestions = async () => {
-    setLoading(true);
-    try {
-      const paginatedQuestions = allQuestions.slice(offset, offset + pageSize); // Paginate
-      setQuestions(paginatedQuestions);
-      setFilteredQuestions(paginatedQuestions); // Initially, no filter
-    } catch (error) {
-      console.error('Error fetching questions:', error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
-    fetchQuestions();
-  }, [offset]);
+    setLoading(true);
+    getQuestions(searchTerm, tags, offset, pageSize).then((response) => {
+      setQuestions(response.data);
+      setLoading(false);
+    });
+
+  }, [offset, searchTerm, tags]);
 
   // Handle search
   const handleSearch = (term) => {
     setSearchTerm(term);
-    const filtered = questions.filter((q) => q.title.toLowerCase().includes(term.toLowerCase()));
-    setFilteredQuestions(filtered);
   };
 
   // Pagination handlers
@@ -53,14 +39,28 @@ const HomePage = () => {
     console.log('Create Question button clicked!');
   };
 
+  const handleTagsChange = (tags) => {
+    setTags(tags.map(tag => tag.label));
+  };
+
   return (
     <div className="home-page">
       {/* Search Bar */}
-      <SearchBar onSearch={handleSearch} />
 
-      <ToggleOptions
-        options={['Newest', 'Hot']}
-      ></ToggleOptions>
+      <div className="Bars">
+        <SearchBar onSearch={handleSearch}/>
+      </div>
+
+      <div className="Bars">
+        <SearchTag onChange={handleTagsChange}/>
+      </div>
+
+      <div className = "filterSwitch">
+        <ToggleOptions
+          options={['Newest', 'Hot']}
+        ></ToggleOptions>
+      </div>
+      
 
       {/* Create Question Button */}
       <div className="create-question">
@@ -72,10 +72,12 @@ const HomePage = () => {
         <p>Loading...</p>
       ) : (
         <div className="question-list">
-          {filteredQuestions.length > 0 ? (
-            filteredQuestions.map((question) => (
-              <PostCard key={question.id} data={question} />
-            ))
+          {questions.length > 0 ? (
+            questions.map((question) => {
+              return (
+                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+              );
+            })
           ) : (
             <p>No questions found.</p>
           )}
@@ -83,7 +85,7 @@ const HomePage = () => {
           {/* Pagination Controls */}
           <div className="pagination-controls">
             <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-            <button onClick={handleNext} disabled={filteredQuestions.length < pageSize}>Next</button>
+            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
           </div>
         </div>
       )}

@@ -1,7 +1,7 @@
-import {Delete, JsonController, Post, Put, Req, Body, Get, Param} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Req, Body, QueryParams, Param, Get} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
-import { QuestionCreateDto, QuestionUpdateDto } from '../model/question.model';
+import { QuestionCreateDto, QuestionUpdateDto, SearchQuestionQueryParams } from '../model/question.model';
 import { Request } from 'express';
 
 @JsonController('/questions')
@@ -26,6 +26,15 @@ export class QuestionController {
         return await this.questionService.deleteQuestion(questionId);
     }
 
+    @Get('/all')
+    async getAllQuestions(@QueryParams() params: SearchQuestionQueryParams) {
+        console.log(JSON.stringify(params));
+        params.offset = +params.offset;
+        params.limit = +params.limit;
+        const tags = params.tags ? params.tags.split(',') : [];
+        return await this.questionService.getAllQuestions(params.search, tags, params.offset, params.limit);
+    }
+    
     @Get('/:questionId')
     async getQuestionById(@Param('questionId') questionId: number) {
         return await this.questionService.getQuestionWithAnswers(questionId);
