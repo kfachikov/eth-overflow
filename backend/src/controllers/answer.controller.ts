@@ -17,12 +17,12 @@ export class AnswerController {
     }
 
     @Put('/:answerId')
-    async updateAnswer(answerId: number, answerUpdateDto: AnswerUpdateDto) {
+    async updateAnswer(@Param('answerId') answerId: number, @Body() answerUpdateDto: AnswerUpdateDto) {
         return await this.answerService.updateAnswer(answerId, answerUpdateDto);
     }
 
     @Delete('/:answerId')
-    async deleteAnswer(answerId: number) {
+    async deleteAnswer(@Param('answerId') answerId: number) {
         return await this.answerService.deleteAnswer(answerId);
     }
 }

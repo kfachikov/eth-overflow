@@ -17,12 +17,12 @@ export class QuestionController {
     }
 
     @Put('/:questionId')
-    async updateQuestion(questionId: number, questionUpdateDto: QuestionUpdateDto) {
+    async updateQuestion(@Param('questionId') questionId: number, @Body() questionUpdateDto: QuestionUpdateDto) {
         return await this.questionService.updateQuestion(questionId, questionUpdateDto);
     }
 
     @Delete('/:questionId')
-    async deleteQuestion(questionId: number) {
+    async deleteQuestion(@Param('questionId') questionId: number) {
         return await this.questionService.deleteQuestion(questionId);
     }
 

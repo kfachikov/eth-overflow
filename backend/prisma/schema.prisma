@@ -41,35 +41,26 @@ model Picture {
 }
 
 model Question {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  score     Int      @default(0)
-
-  createdAt DateTime @default(now())
-  modifiedAt DateTime @default(now())
-
-  author    Account  @relation(fields: [authorId], references: [id])
-  authorId  Int
-
-  selectedAnswer Answer? @relation("SelectedAnswerToQuestions", fields: [selectedAnswerId], references: [id], onDelete: SetNull)
-  selectedAnswerId Int? @unique
-
-  answers Answer[] @relation("AnswerToQuestion")
-
-  comments CommentQuestion[] @relation("CommentToQuestion")
-
-  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
-  courseId Int?
-
+  id              Int              @id @default(autoincrement())
+  title           String
+  content         String
+  score           Int              @default(0)
+  createdAt       DateTime         @default(now())
+  modifiedAt      DateTime         @updatedAt
+  author          Account          @relation(fields: [authorId], references: [id])
+  authorId        Int
+  selectedAnswer  Answer?          @relation("SelectedAnswerToQuestions", fields: [selectedAnswerId], references: [id], onDelete: SetNull)
+  selectedAnswerId Int?            @unique
+  answers         Answer[]         @relation("AnswerToQuestion")
+  comments        CommentQuestion[] @relation("CommentToQuestion")
   votesOnQuestion VotesOnQuestion[]
+  tags            Tag[]            @relation("QuestionTags")
 }
 
-model Course {
+model Tag {
   id        Int      @id @default(autoincrement())
-  name      String
-  
-  questions Question[]
+  name      String   @unique
+  questions Question[] @relation("QuestionTags")
 }
 
 model Answer {
@@ -78,7 +69,7 @@ model Answer {
   score     Int      @default(0)
 
   createdAt DateTime @default(now())
-  modifiedAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 
   author    Account  @relation(fields: [authorId], references: [id])
   authorId  Int
@@ -100,11 +91,11 @@ model CommentQuestion {
   author    Account  @relation(fields: [authorId], references: [id])
   authorId  Int
 
-  question    Question?  @relation("CommentToQuestion", fields: [questionId], references: [id], onDelete: Cascade)
-  questionId Int?
+  question    Question  @relation("CommentToQuestion", fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
 
   createdAt DateTime @default(now())
-  modifiedAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 }
 
 model CommentAnswer {
@@ -118,7 +109,7 @@ model CommentAnswer {
   answerId  Int
 
   createdAt DateTime @default(now())
-  modifiedAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 }
 
 model VotesOnQuestion {
