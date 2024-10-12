@@ -1,0 +1,25 @@
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    cursor: pointer;
+  }
+  
+  .triangle.up {
+    border-bottom: 40px solid var(--purple20); /* Triangle pointing up */
+  }
+
+  .triangle.up:hover,
+  .triangle.down:hover {
+    border-bottom: 40px solid var(--purple40); /* Triangle pointing up */
+  }
+  
+  .triangle.down {
+    border-top: 40px solid var(--purple20); /* Triangle pointing down */
+  }
+
+  .triangle.active {
+    border-bottom: 40px solid var(--purple60); /* Triangle pointing up */
+  }
+  
