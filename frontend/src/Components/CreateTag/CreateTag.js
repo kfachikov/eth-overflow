@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { createTag, getTags } from '../../services/tagService';
 
-const TagSearch = () => {
+const CreateTag = () => {
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]); // Available tag options
   const [selectedTags, setSelectedTags] = useState([]); // Selected tags
@@ -82,4 +82,4 @@ const TagSearch = () => {
   );
 };
 
-export default TagSearch;
+export default CreateTag;

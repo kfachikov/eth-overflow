@@ -49,7 +49,7 @@ export class QuestionService {
         });
     }
 
-    async getAllQuestions(search: string, offset: number, limit: number) {
+    async getAllQuestions(search: string, tags: string[], offset: number, limit: number) {
         return await prisma.question.findMany({
             where: {
                 OR: [
@@ -64,9 +64,22 @@ export class QuestionService {
                         },
                     },
                 ],
+            ...(tags.length > 0 && {
+                    AND: tags.map((tag) => ({
+                        tags: {
+                            some: {
+                                name: tag
+                            }
+                        }
+                    }))
+                }),
             },
             skip: offset,
             take: limit,
+            include: {
+                tags: true,
+                author: true,
+            }
         });
     }
 
