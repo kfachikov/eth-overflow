@@ -16,3 +16,7 @@ export class SearchQuestionQueryParams {
     limit = 10;
     tags = '';
 }
+
+export class SelectAnswerDto {
+    answerId: number;
+}

@@ -31,4 +31,21 @@ export class AnswerService {
             },
         });
     }
+
+    async updateScore(answerId: number, scoreChange: number) {
+        const answer = await prisma.answer.findUnique({
+            where: {
+                id: answerId,
+            }
+        });
+        const finalScore = answer!.score + scoreChange;
+        return prisma.answer.update({
+            where: {
+                id: answerId,
+            },
+            data: {
+                score: finalScore,
+            }
+        })
+    }
 }

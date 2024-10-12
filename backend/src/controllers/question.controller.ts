@@ -1,13 +1,16 @@
 import {Delete, JsonController, Post, Put, Req, Body, QueryParams, Param, Get} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
-import { QuestionCreateDto, QuestionUpdateDto, SearchQuestionQueryParams } from '../model/question.model';
+import { QuestionCreateDto, QuestionUpdateDto, SearchQuestionQueryParams, SelectAnswerDto } from '../model/question.model';
+import {VoteDto} from "../model/vote.model";
 import { Request } from 'express';
+import {VoteQuestionService} from "../services/vote-question.service";
+import { SearchPhraseQueryParams } from '../model/common.model';
 
 @JsonController('/questions')
 @Service()
 export class QuestionController {
-    constructor(private questionService: QuestionService) {}
+    constructor(private questionService: QuestionService, private voteQuestionService: VoteQuestionService) {}
 
     @Post('/')
     async createQuestion(@Body() questionCreateDto: QuestionCreateDto, @Req() req: Request) {
@@ -34,7 +37,7 @@ export class QuestionController {
         const tags = params.tags ? params.tags.split(',') : [];
         return await this.questionService.getAllQuestions(params.search, tags, params.offset, params.limit);
     }
-    
+
     @Get('/:questionId')
     async getQuestionById(@Param('questionId') questionId: number) {
         return await this.questionService.getQuestionWithAnswers(questionId);
@@ -43,5 +46,19 @@ export class QuestionController {
     @Get('/')
     async getQuestions() {
         return await this.questionService.getQuestionsWithAnswers();
+    }
+
+    @Put('/:questionId/vote')
+    async voteForQuestion(@Param('questionId') questionId: number, @Body() voteDto: VoteDto, @Req() req: Request) {
+        // @ts-ignore
+        const userId = req.userId;
+        const change = await this.voteQuestionService.voteQuestion(userId, questionId, voteDto);
+
+        return await this.questionService.updateScore(questionId, change);
+    }
+
+    @Put('/:questionId/select')
+    async selectBestAnswer(@Param('questionId') questionId: number, @Body() selectAnswerDto: SelectAnswerDto) {
+        return await this.questionService.selectBestAnswer(questionId, selectAnswerDto.answerId);
     }
 }
