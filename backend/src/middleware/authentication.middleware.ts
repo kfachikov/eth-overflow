@@ -2,7 +2,7 @@ import { Middleware, ExpressMiddlewareInterface } from "routing-controllers";
 import { Request, Response, NextFunction } from "express";
 import {Service} from "typedi";
 import dotenv from 'dotenv';
-import {sign} from "jsonwebtoken";
+import {sign, verify} from "jsonwebtoken";
 import prisma from '../../prisma';
 
 dotenv.config();
@@ -36,9 +36,15 @@ export class AuthenticationMiddleware implements ExpressMiddlewareInterface {
                 console.log("user created")
                 console.log(user)
             }
-            console.log(user)
+
+            // @ts-ignore
+            req.userId = user.id;
 
             const token = sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+
+            const decoded = verify(token, secretKey);
+            console.log("decoded:::  ---- ", decoded);
+            console.log("token:     --- ", token)
 
             res.setHeader('Authorization', `Bearer ${token}`);
             res.locals.token = token;

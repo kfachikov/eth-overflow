@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const secretKey: string = process.env.JWT_SECRET_KEY!;
+console.log(secretKey)
 
 @Service()
 @Middleware({ type: 'before' })
@@ -18,7 +19,8 @@ export class TokenMiddleware implements ExpressMiddlewareInterface {
         if (authHeader) {
             const token = authHeader.split(' ')[1];
             try {
-                verify(token, secretKey);
+                let userId = verify(token, secretKey) as string;
+                // req.userId = userId;
             } catch (err) {
                 res.locals.needAuthentication = true;
             }
