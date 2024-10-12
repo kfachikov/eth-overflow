@@ -30,6 +30,9 @@ code {
   --purple120: #8c0a59;
 }
 
-.logout-item {
-  height: 5em;
+.logout-icon {
+  float: right;
+  padding: 1em;
+  width: 3em;
+  height: 3em;
 }
