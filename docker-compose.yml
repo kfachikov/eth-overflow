@@ -59,7 +59,7 @@ services:
       context: ./frontend/
       dockerfile: ./Dockerfile
     ports:
-      - "3001:3001"
+      - "3001:3000"
     command: [ "sh", "-c", "yarn install && yarn start" ]
     working_dir: /app
     volumes:
@@ -69,7 +69,7 @@ services:
       traefik.enable: true
       traefik.http.routers.frontend.entrypoints: web
       traefik.http.routers.frontend.rule: PathPrefix(`/`)
-      traefik.http.services.frontend.loadbalancer.server.port: 3001
+      traefik.http.services.frontend.loadbalancer.server.port: 3000
     restart: unless-stopped
     environment:
       - CHOKIDAR_USEPOLLING=true
