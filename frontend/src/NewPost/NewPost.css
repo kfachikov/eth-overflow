@@ -1,0 +1,6 @@
+.flex-container {
+  display: inline-flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1em;
+}
