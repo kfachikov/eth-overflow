@@ -17,10 +17,23 @@ function QuestionView() {
         console.log(questionId);
         setLoading(true);
         getQuestionAndAnswers(questionId).then((response) => {
-            var question = new PostModel()
+            let question = new PostModel()
             question.parsePostFromJSON({...response.data, isQuestion: true, isBestAnswer: false});
             console.log(question)
+            
+            let answers = response.data.answers.map((answer) => {
+                let answerModel = new PostModel()
+                let isBestAnswer = answer.id === response.data.bestAnswerId
+                answerModel.parsePostFromJSON({
+                    ...answer,
+                    tags: [],
+                    isQuestion: false, 
+                    isBestAnswer: isBestAnswer}
+                );
+                return answerModel;
+            });
 
+            setAnswers(answers);
             setQuestion(question);
             setLoading(false);
         });
@@ -30,7 +43,10 @@ function QuestionView() {
     if (loading) {
         return <div>Loading...</div>
     } else {
-        return <PostCard post={question} thisVote={false} />
+        return <>
+            <PostCard post={question} thisVote={false} />
+            {answers.map((answer) => <PostCard post={answer} thisVote={false} />)}
+        </>
     }
     
 }

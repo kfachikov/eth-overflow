@@ -26,14 +26,17 @@ const PostCard = (props) => {
   }
 
   return (
-    <div className={"post-card" + (isBestAnswer ? " selected-answer-card" : "")}>
+    <div className={"post-card" + 
+      (post.isQuestion ? " question" : " answer") + 
+      (isBestAnswer ? " selected-answer-card" : "")}
+    >
       <div className="vote-buttons">
         <VoteButton
           isUpvote={true}
           onClick={() => handleVote(voteState !== Vote.UPVOTE ? Vote.UPVOTE : Vote.NEUTRAL)}
           isClicked={voteState === Vote.UPVOTE} // Active if upvoted
         />
-        <div>{score}</div>
+        <div className='score'>{score}</div>
         <VoteButton
           isUpvote={false}
           onClick={() => handleVote(voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL)}
