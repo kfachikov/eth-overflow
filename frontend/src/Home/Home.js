@@ -37,7 +37,6 @@ const HomePage = () => {
   // Handle Create Question click
   const handleCreateQuestion = () => {
     // This would navigate to a new page or open a modal
-    console.log('Create Question button clicked!');
   };
 
   const handleTagsChange = (tags) => {
