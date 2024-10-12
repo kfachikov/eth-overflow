@@ -12,6 +12,7 @@ export const attachToken = (request) => {
 };
 
 export const setAccessToken = (response) => {
+  console.log(response);
   let token = response.headers.Authorization;
   token = token ? token.split(' ')[1] : null;
 

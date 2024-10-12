@@ -14,7 +14,6 @@ const secretKey: string = process.env.JWT_SECRET_KEY!;
 export class AuthenticationMiddleware implements ExpressMiddlewareInterface {
 
     async use(req: Request, res: Response, next: NextFunction): Promise<void> {
-        console.log(req.headers);
         if (res.locals.needAuthentication) {
             const email: string = req.headers['x-authentik-email'] as string;
             // TODO: change at the end
