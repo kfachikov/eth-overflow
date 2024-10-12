@@ -7,6 +7,7 @@ import "katex/dist/katex.min.css"; // Import Katex CSS
 
 import { createQuestion } from "../services/postService";
 import CreateTag from "../Components/CreateTag/CreateTag";
+import Button, { ButtonSize } from "../Components/Button";
 
 function NewPost() {
   const [title, setTitle] = useState("");
@@ -26,7 +27,7 @@ function NewPost() {
     const postData = {
       title: title,
       content: content,
-      tags: tags.map((tag) => tag.value),
+      tags: tags,
     };
 
     // // Here you can make an HTTP POST request to your backend
@@ -93,12 +94,17 @@ function NewPost() {
       </div>
 
       <div className="form-actions">
-        <button onClick={handleCancel} className="btn btn-secondary">
-          Cancel
-        </button>
-        <button onClick={handlePost} className="btn btn-primary">
-          Post
-        </button>
+        <Button
+          text="Cancel"
+          onClick={handleCancel}
+          isDelete={true}
+          size={ButtonSize.MEDIUM}
+        ></Button>
+        <Button
+          text="Post"
+          onClick={handlePost}
+          size={ButtonSize.MEDIUM}
+        ></Button>
       </div>
     </div>
   );
