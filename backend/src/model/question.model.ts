@@ -15,6 +15,7 @@ export class SearchQuestionQueryParams {
     offset = 0;
     limit = 10;
     tags = '';
+    order: "createdAt" | "score" = "createdAt";
 }
 
 export class SelectAnswerDto {
