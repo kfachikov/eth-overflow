@@ -14,20 +14,21 @@ console.log(secretKey)
 export class TokenMiddleware implements ExpressMiddlewareInterface {
 
     use(req: Request, res: Response, next: NextFunction): void {
-        console.log("I am in token middleware");
         const authHeader = req.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(' ')[1];
             try {
-                let userId = verify(token, secretKey) as string;
-                // req.userId = userId;
+                const decoded = verify(token, secretKey);
+                // @ts-ignore
+                const { userId } = decoded;
+                // @ts-ignore
+                req.userId = userId;
             } catch (err) {
                 res.locals.needAuthentication = true;
             }
         } else {
             res.locals.needAuthentication = true;
         }
-        console.log(`needs: ${res.locals.needAuthentication}`);
         next();
     }
 }
