@@ -27,7 +27,7 @@ function App() {
     [tag, tag2],
     0,
     true,
-    true
+    false
   )
 
   return (
@@ -40,9 +40,7 @@ function App() {
         <Route path="/question/:question_id" element={<Question />} />
         <Route path="/userprofile/:username" element={<UserProfile />} />
       </Routes>
-      
-      <PostCard post={question} thisVote={0} isCollapsed={true}></PostCard>
-    </>
+      </>
   );
 }
 
