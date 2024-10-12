@@ -5,18 +5,9 @@ import { TagCreateDto, TagUpdateDto } from '../model/tag.model';
 @Service()
 export class TagService {
     async createTag(tagCreateDto: TagCreateDto) {
-        const { questions, ...rest } = tagCreateDto;
-
-        const questionConnect = questions
-            ? questions.map(questionId => ({ id: questionId }))
-            : undefined;
-
         return prisma.tag.create({
             data: {
-                ...rest,
-                questions: {
-                    connect: questionConnect,
-                },
+                ...tagCreateDto
             },
         });
     }
@@ -45,12 +36,7 @@ export class TagService {
         });
     }
 
-    async getQuestionsForTag(tagId: number) {
-        return prisma.tag.findUnique({
-            where: { id: tagId },
-            include: {
-                questions: true,
-            },
-        });
+    async getTags() {
+        return prisma.tag.findMany();
     }
 }

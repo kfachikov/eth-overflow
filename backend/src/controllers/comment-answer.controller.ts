@@ -17,12 +17,12 @@ export class CommentAnswerController {
     }
 
     @Put('/:commentAnswerId')
-    async updateCommentAnswer(commentAnswerId: number, commentAnswerUpdateDto: CommentAnswerUpdateDto) {
+    async updateCommentAnswer(@Param('commentAnswerId') commentAnswerId: number, @Body() commentAnswerUpdateDto: CommentAnswerUpdateDto) {
         return await this.commentAnswerService.updateCommentAnswer(commentAnswerId, commentAnswerUpdateDto);
     }
 
     @Delete('/:commentAnswerId')
-    async deleteAnswer(commentAnswerId: number) {
+    async deleteAnswer(@Param('commentAnswerId') commentAnswerId: number) {
         return await this.commentAnswerService.deleteCommentAnswer(commentAnswerId);
     }
 }

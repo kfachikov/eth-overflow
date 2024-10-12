@@ -23,8 +23,8 @@ export class TagController {
         return await this.tagService.deleteTag(tagId);
     }
 
-    @Get('/:tagId/questions')
-    async getQuestionsForTag(@Param('tagId') tagId: number) {
-        return await this.tagService.getQuestionsForTag(tagId);
+    @Get('/')
+    async getTags() {
+        return await this.tagService.getTags();
     }
 }

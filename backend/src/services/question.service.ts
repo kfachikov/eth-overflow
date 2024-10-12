@@ -59,6 +59,7 @@ export class QuestionService {
                     }
                     },
                 comments: true,
+                tags: true,
             },
         });
     }
@@ -72,6 +73,7 @@ export class QuestionService {
                     }
                 },
                 comments: true,
+                tags: true,
             },
         });
     }
