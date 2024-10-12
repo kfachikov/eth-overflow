@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CreatableSelect from 'react-select/creatable';
-import { createTag, getTags } from '../../services/tagService';
+import Select from 'react-select';
+import { getTags } from '../../services/tagService';
 
 const TagSearch = () => {
   const [inputValue, setInputValue] = useState('');
@@ -14,8 +14,8 @@ const TagSearch = () => {
 
   const fetchTags = async () => {
     try {
-      const data = getTags();
-      setOptions(data.map(tag => ({ label: tag.name, value: tag.id })));
+      const response = await getTags();
+      setOptions(response.data.map(tag => ({ label: tag.name, value: tag.id })));
     } catch (error) {
       console.error('Error fetching tags', error);
     }
@@ -39,23 +39,7 @@ const TagSearch = () => {
       if (existingTag) {
         // Tag exists, select it
         setSelectedTags((prevSelectedTags) => [...prevSelectedTags, existingTag]);
-      } else {
-        // Tag doesn't exist, create it through API
-        const newTag = handleCreateTag(inputValue);
-        setSelectedTags((prevSelectedTags) => [...prevSelectedTags, newTag]);
-        setOptions([...options, newTag]);
       }
-      setInputValue(''); // Reset input field
-    }
-  };
-
-  // Function to create a new tag via an API call
-  const handleCreateTag = (tagName) => {
-    try {
-      const response = createTag({ name: tagName }); // Call API to create new tag
-      return { label: response.data.name, value: response.data.id }; // Return the new tag object
-    } catch (error) {
-      console.error('Error creating new tag', error);
     }
   };
 
@@ -65,16 +49,15 @@ const TagSearch = () => {
 
   return (
     <div>
-      <CreatableSelect
+      <Select
         isMulti
-        createOptionPosition="first"
         value={selectedTags}
         options={options}
         onInputChange={handleInputChange}
         onChange={handleChange}
         inputValue={inputValue}
         onKeyDown={handleKeyDown}
-        placeholder="Search or create tags..."
+        placeholder="Search tags..."
         noOptionsMessage={() => 'No tags found'}
         filterOption={customFilter}
       />
