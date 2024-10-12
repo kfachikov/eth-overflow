@@ -1,0 +1,69 @@
+  .eth-logo {
+    width: 30%;
+    max-width: 1000px; /* Logo width is 20% of the viewport width */
+  }
+  
+  .header {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #loading-spinner {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  #account-container {
+    display: flex;
+    margin-left: auto; /* Pushes the container to the right-most side */
+  }
+  
+  #account-container-small {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+  }
+  
+  #account-name {
+    font-size: 2em;
+    margin-right: 10px; /* Adds spacing between the username and karma */
+  }
+
+  #account-karma {
+    padding-top: 7px;
+    font-size: 1.5em;
+    margin-right: 10px; /* Adds spacing between the karma and the logout icon */
+  }
+  
+  #account-reputation {
+    flex-direction: row;
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    font-size: large;
+    margin-right: 10px; /* Adds spacing between the karma and the logout icon */
+  }
+
+  .logout-icon {
+    padding-top: 12px;
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    height: 1.5em;
+    width: 1.5em;
+  }
+
+  .reputation-icon {
+    padding-top: 12px;
+    height: 1.5em;
+    width: 1.5em;
+    margin-right: 5px; /* Adds spacing between the icon and the text */
+  }

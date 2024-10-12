@@ -39,10 +39,10 @@ const PostCard = (props) => {
           onClick={() => handleVote(voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL)}
           isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
         />
-        {isBestAnswer ? 
+        {!post.isQuestion ? (isBestAnswer ? 
           <div onClick={handleSelectBest} className="selected-checkmark">✔</div> : 
           <div onClick={handleSelectBest} className="unselected-checkmark">✔</div>
-        }
+        ) : <></>}
       </div>
 
       <div className="post-body">

@@ -6,6 +6,7 @@
   display: flex;               /* Enables flexbox */
   align-items: center;          /* Centers items vertically */
   background-color: var(--white);
+  flex-grow: 1;
 }
 
 .selected-answer-card {
