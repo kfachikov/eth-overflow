@@ -4,7 +4,7 @@ import { Request } from 'express';
 import {CommentQuestionService} from "../services/comment-question.service";
 import {CommentQuestionCreateDto, CommentQuestionUpdateDto} from "../model/comment-question";
 
-@JsonController('/questions/:questionId')
+@JsonController('/questions/:questionId/comments')
 @Service()
 export class CommentQuestionController {
     constructor(private commentQuestionService: CommentQuestionService ) {}

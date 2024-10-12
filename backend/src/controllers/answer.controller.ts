@@ -1,4 +1,4 @@
-import {Delete, JsonController, Post, Put, Param, Req, Body, Get} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Param, Req, Body} from 'routing-controllers';
 import { Service } from 'typedi';
 import {AnswerService} from "../services/answer.service";
 import {AnswerCreateDto, AnswerUpdateDto} from "../model/answer.model";
