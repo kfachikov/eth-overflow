@@ -6,6 +6,7 @@ import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Impor
 import { getQuestions } from '../services/questionService';  // Import your API function
 import { parsePostFromJSON } from '../Models/PostModel';  // Import your parse function
 import './Home.css';
+import Button, {ButtonSize} from '../Components/Button';
 
 const HomePage = () => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
@@ -47,7 +48,7 @@ const HomePage = () => {
     <div className="home-page">
       {/* Search Bar */}
 
-      <div className="Bars">
+      <div className="searchBar gridbox">
         <SearchBar onSearch={handleSearch}/>
       </div>
 
@@ -55,7 +56,7 @@ const HomePage = () => {
         <SearchTag onChange={handleTagsChange}/>
       </div>
 
-      <div className = "filterSwitch">
+      <div className = "sortToggle gridbox">
         <ToggleOptions
           options={['Newest', 'Hot']}
           onToggle={(val) => {
@@ -64,11 +65,16 @@ const HomePage = () => {
           }}
         ></ToggleOptions>
       </div>
-      
+
+      <div className = "answeredToggle gridbox">
+        <ToggleOptions
+          options={['Unanswered', 'Answered', 'Solved']}
+        ></ToggleOptions>
+      </div>
 
       {/* Create Question Button */}
-      <div className="create-question">
-        <button onClick={handleCreateQuestion}>Create Question</button>
+      <div className="create-question gridbox">
+        <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
       </div>
 
       {/* Question List */}
