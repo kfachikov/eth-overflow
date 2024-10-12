@@ -1,32 +1,33 @@
 /* src/styles/ToggleButton.css */
 
 .toggle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2px;
-    width: min-content;
-    border: 1px solid var(--gray60);
-    border-radius: 5px;
-  }
-  
-  .toggle-button {
-    padding: 10px;
-    margin: 1px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: var(--white);
-    color: var(--black);
-    transition: opacity 0.3s ease;
-  }
-  
-  .toggle-button:hover {
-    background-color: var(--purple40);
-  }
-  
-  .toggle-button.dimmed {
-    background-color: var(--purple80);
-    color: var(--white);
-  }
-  
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  /*width: min-content;*/
+  border: 1px solid var(--gray60);
+  border-radius: 5px;
+}
+
+.toggle-button {
+  padding: 10px;
+  /*margin: 1px;*/
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--white);
+  color: var(--black);
+  transition: opacity 0.3s ease;
+  flex: 1;
+}
+
+.toggle-button:hover {
+  background-color: var(--purple40);
+}
+
+.toggle-button.dimmed {
+  background-color: var(--purple80);
+  color: var(--white);
+}
