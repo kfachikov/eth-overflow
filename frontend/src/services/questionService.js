@@ -1,6 +1,6 @@
 import httpService from './httpService';
 
-export const getQuestions = async (search, tags, offset, limit) => {
+export const getQuestions = async (search, tags, offset, limit, order) => {
     if (search) {
       search = `&search=${search}`;
     }
@@ -9,6 +9,6 @@ export const getQuestions = async (search, tags, offset, limit) => {
       tags = `&tags=${tags.join(',')}`;
     }
 
-    return await httpService.get(`/questions/all?offset=${offset}&limit=${limit}${search}${tags}`);
+    return await httpService.get(`/questions/all?offset=${offset}&limit=${limit}&order=${order}${search}${tags}`);
 };
   
