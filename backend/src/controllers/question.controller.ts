@@ -1,4 +1,4 @@
-import {Delete, JsonController, Get, Put, Req, Body} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Req, Body} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
 import { QuestionCreateDto, QuestionUpdateDto } from '../model/question.model';
@@ -9,7 +9,7 @@ import { Request } from 'express';
 export class QuestionController {
     constructor(private questionService: QuestionService) {}
 
-    @Get('/')
+    @Post('/')
     async createQuestion(@Body() questionCreateDto: QuestionCreateDto, @Req() req: Request) {
         // @ts-ignore
         const userId = req.userId;
