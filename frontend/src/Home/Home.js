@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../Components/SearchBar/SearchBar';  // Import your SearchBar component
 import SearchTag from '../Components/SearchTag/SearchTag';  // Import your TagSearch component
-import QuestionCard from '../Components/QuestionCard/QuestionCard';  // Import your QuestionCard component
+import PostCard from '../Components/PostCard/PostCard';
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
 import { getQuestions } from '../services/questionService';  // Import your API function
 import './Home.css';
@@ -69,7 +69,7 @@ const HomePage = () => {
         <div className="question-list">
           {questions.length > 0 ? (
             questions.map((question) => (
-              <QuestionCard key={question.id} data={question} />
+              <PostCard key={question.id} data={question} />
             ))
           ) : (
             <p>No questions found.</p>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import QuestionCard from '../../Components/QuestionCard/QuestionCard'; // Assuming QuestionCard is already built
+import PostCard from '../../Components/PostCard/PostCard'; // Assuming PostCard is already built
+import PostModel from '../../Models/PostModel'; // Assuming PostModel is already built
 import './QuestionList.css';
 
 import { getQuestions } from '../../services/questionService';
+import { Vote } from '../../Components/PostModel';
 
 const QuestionList = () => {
   const [questions, setQuestions] = useState([]); // Store the questions
@@ -48,7 +50,7 @@ const QuestionList = () => {
         <>
           {/* Render the Question Cards */}
           {questions.map((question) => (
-            <QuestionCard key={question.id} data={question} />
+            <PostCard post={PostModel.parsePostFromJSON(questionJSON)} isCollapsed={true} thisVote={Vote.NEUTRAL}/>
           ))}
 
           {/* Pagination Controls */}
