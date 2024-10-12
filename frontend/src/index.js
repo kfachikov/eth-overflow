@@ -10,6 +10,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <img
+        className='eth-logo'
         src = "eth_logo_kurz_pos.svg"
         alt="Background"
       />

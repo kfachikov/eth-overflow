@@ -29,3 +29,13 @@ code {
   --purple: #A7117A;
   --purple120:	#8C0A59;
 }
+
+
+.eth-logo{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5em;
+  object-fit: cover;
+  opacity: 1;
+}
