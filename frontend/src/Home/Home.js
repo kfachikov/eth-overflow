@@ -16,6 +16,16 @@ function Home() {
                 <button class="bigBadBunnyButton">
                     <label>Post new Question</label>
                 </button>
+                <div>
+                    <input type="text" placeholder="filter courses"></input>
+                </div>
+                <div>
+                    <input type="text" placeholder="filter semester"></input>
+                </div>
+                <div>
+                    <label for="receiveUpdates"></label>
+                    <input type="checkbox" id="receiveUpdates"></input>
+                </div>
             </div>
             <div class="questionCardArea">
                 Second
