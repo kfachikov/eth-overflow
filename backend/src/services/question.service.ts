@@ -12,7 +12,7 @@ export class QuestionService {
             ? tags.map(tagId => ({ id: tagId }))
             : undefined;
 
-        return await prisma.question.create({
+        return prisma.question.create({
             data: {
                 authorId: userId,
                 ...rest,
@@ -32,7 +32,7 @@ export class QuestionService {
             }
             : undefined;
 
-        return await prisma.question.update({
+        return prisma.question.update({
             where: { id: questionId },
             data: {
                 ...rest,
@@ -42,15 +42,15 @@ export class QuestionService {
     }
 
     async deleteQuestion(questionId: number) {
-        return await prisma.question.delete({
+        return prisma.question.delete({
             where: {
                 id: questionId,
             },
         });
     }
 
-    async getAllQuestions(search: string, tags: string[], offset: number, limit: number) {
-        return await prisma.question.findMany({
+    async getAllQuestions(search: string, tags: string[], offset: number, limit: number, orderByField?: string) {
+        return prisma.question.findMany({
             where: {
                 OR: [
                     {
@@ -74,6 +74,11 @@ export class QuestionService {
                     }))
                 }),
             },
+            orderBy: orderByField
+                ? {
+                    [orderByField]: 'desc',
+                }
+                : undefined,
             skip: offset,
             take: limit,
             include: {
@@ -84,7 +89,7 @@ export class QuestionService {
     }
 
     async getQuestionWithAnswers(questionId: number) {
-        return await prisma.question.findUnique({
+        return prisma.question.findUnique({
             where: { id: questionId },
             include: {
                 answers: {
@@ -99,7 +104,7 @@ export class QuestionService {
     }
 
     async getQuestionsWithAnswers() {
-        return await prisma.question.findMany({
+        return prisma.question.findMany({
             include: {
                 answers: {
                     include: {

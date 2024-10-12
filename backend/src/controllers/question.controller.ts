@@ -35,7 +35,7 @@ export class QuestionController {
         params.offset = +params.offset;
         params.limit = +params.limit;
         const tags = params.tags ? params.tags.split(',') : [];
-        return await this.questionService.getAllQuestions(params.search, tags, params.offset, params.limit);
+        return await this.questionService.getAllQuestions(params.search, tags, params.offset, params.limit, params.order);
     }
 
     @Get('/:questionId')
