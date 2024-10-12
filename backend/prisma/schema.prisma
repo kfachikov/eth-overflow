@@ -121,6 +121,8 @@ model VotesOnQuestion {
 
   question  Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
+
+  @@unique([accountId, questionId])
 }
 
 model VotesOnAnswer {
@@ -132,4 +134,6 @@ model VotesOnAnswer {
 
   answer    Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
   answerId  Int
+
+  @@unique([accountId, answerId])
 }

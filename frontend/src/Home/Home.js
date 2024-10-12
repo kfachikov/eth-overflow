@@ -10,6 +10,7 @@ import './Home.css';
 const HomePage = () => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
   const [searchTerm, setSearchTerm] = useState(''); // Track search term
+    const [order, setOrder] = useState('createdAt');
   const [tags, setTags] = useState([]); // Track selected tags
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
@@ -17,12 +18,12 @@ const HomePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, tags, offset, pageSize).then((response) => {
+    getQuestions(searchTerm, tags, offset, pageSize, order).then((response) => {
       setQuestions(response.data);
       setLoading(false);
     });
 
-  }, [offset, searchTerm, tags]);
+  }, [offset, searchTerm, tags, order]);
 
   // Handle search
   const handleSearch = (term) => {
@@ -58,6 +59,10 @@ const HomePage = () => {
       <div className = "filterSwitch">
         <ToggleOptions
           options={['Newest', 'Hot']}
+          onToggle={(val) => {
+              const newOrder = val === "Newest" ? "createdAt" : "score"
+              setOrder(newOrder);
+          }}
         ></ToggleOptions>
       </div>
       
