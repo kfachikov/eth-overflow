@@ -12,7 +12,7 @@ export class QuestionUpdateDto {
 
 export class SearchQuestionQueryParams {
     search = '';
-    offset = 0;
-    limit = 10;
+    offset = '0';
+    limit = '10';
     tags: string[] = [];
 }

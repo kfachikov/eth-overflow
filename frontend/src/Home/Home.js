@@ -14,10 +14,12 @@ const HomePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, offset, pageSize).then((response) => {
-      setQuestions(response.data);
+    getQuestions(searchTerm, offset, pageSize).then((data) => {
+      console.log(data);
+      setQuestions(data);
       setLoading(false);
     });
+
   }, [offset, searchTerm]);
 
   // Handle search
@@ -38,11 +40,20 @@ const HomePage = () => {
   return (
     <div className="home-page">
       {/* Search Bar */}
-      <SearchBar onSearch={handleSearch} />
 
-      <ToggleOptions
-        options={['Newest', 'Hot']}
-      ></ToggleOptions>
+      <div className="Bars">
+        <SearchBar onSearch={handleSearch}/>
+      </div>
+
+      <div className="Bars">
+        <SearchBar onSearch={handleSearch}/>
+      </div>
+      <div className = "filterSwitch">
+        <ToggleOptions
+          options={['Newest', 'Hot']}
+        ></ToggleOptions>
+      </div>
+      
 
       {/* Create Question Button */}
       <div className="create-question">
