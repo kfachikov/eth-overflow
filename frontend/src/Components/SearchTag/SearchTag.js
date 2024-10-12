@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { getTags } from '../../services/tagService';
 
-const TagSearch = () => {
+const SearchTag = ({ onChange }) => {
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]); // Available tag options
   const [selectedTags, setSelectedTags] = useState([]); // Selected tags
@@ -29,6 +29,7 @@ const TagSearch = () => {
   // Handle selection of tags (either existing or newly created)
   const handleChange = (selected) => {
     setSelectedTags(selected || []);
+    onChange(selected);
   };
 
   // Handle enter press to either select or create new tag
@@ -65,4 +66,4 @@ const TagSearch = () => {
   );
 };
 
-export default TagSearch;
+export default SearchTag;

@@ -9,19 +9,19 @@ import './Home.css';
 const HomePage = () => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
   const [searchTerm, setSearchTerm] = useState(''); // Track search term
+  const [tags, setTags] = useState([]); // Track selected tags
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, offset, pageSize).then((data) => {
-      console.log(data);
-      setQuestions(data);
+    getQuestions(searchTerm, tags, offset, pageSize).then((response) => {
+      setQuestions(response.data);
       setLoading(false);
     });
 
-  }, [offset, searchTerm]);
+  }, [offset, searchTerm, tags]);
 
   // Handle search
   const handleSearch = (term) => {
@@ -38,6 +38,10 @@ const HomePage = () => {
     console.log('Create Question button clicked!');
   };
 
+  const handleTagsChange = (tags) => {
+    setTags(tags.map(tag => tag.label));
+  };
+
   return (
     <div className="home-page">
       {/* Search Bar */}
@@ -47,7 +51,7 @@ const HomePage = () => {
       </div>
 
       <div className="Bars">
-        <SearchTag/>
+        <SearchTag onChange={handleTagsChange}/>
       </div>
 
       <div className = "filterSwitch">
@@ -69,7 +73,7 @@ const HomePage = () => {
         <div className="question-list">
           {questions.length > 0 ? (
             questions.map((question) => (
-              <PostCard key={question.id} data={question} />
+              <PostCard key={question.id} post={{...question, isQuestion: true }} />
             ))
           ) : (
             <p>No questions found.</p>
