@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const secretKey: string = process.env.JWT_SECRET_KEY!;
-console.log(secretKey)
 
 @Service()
 @Middleware({ type: 'before' })

@@ -1,4 +1,4 @@
-import {Delete, JsonController, Post, Put, Req, Body} from 'routing-controllers';
+import {Delete, JsonController, Post, Put, Req, Body, Get, Param} from 'routing-controllers';
 import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
 import { QuestionCreateDto, QuestionUpdateDto } from '../model/question.model';
@@ -24,5 +24,15 @@ export class QuestionController {
     @Delete('/:questionId')
     async deleteQuestion(questionId: number) {
         return await this.questionService.deleteQuestion(questionId);
+    }
+
+    @Get('/:questionId')
+    async getQuestionById(@Param('questionId') questionId: number) {
+        return await this.questionService.getQuestionWithAnswers(questionId);
+    }
+
+    @Get('/')
+    async getQuestions() {
+        return await this.questionService.getQuestionsWithAnswers();
     }
 }

@@ -10,6 +10,7 @@ import { CorsOptions } from 'cors';
 import { CorsService } from './services/cors.service';
 import {TokenMiddleware} from "./middleware/token.middleware";
 import {AuthenticationMiddleware} from "./middleware/authentication.middleware";
+import {HttpErrorHandler} from "./middleware/error.middleware";
 
 useContainer(Container);
 
@@ -37,6 +38,7 @@ const app = createExpressServer({
     middlewares: [
         TokenMiddleware,
         AuthenticationMiddleware,
+        HttpErrorHandler,
     ],
     controllers: [path.join(__dirname + '/controllers/**/*')],
 }) as Express;
