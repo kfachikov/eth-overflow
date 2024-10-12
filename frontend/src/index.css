@@ -36,3 +36,11 @@ code {
   width: 3em;
   height: 3em;
 }
+
+.eth-logo {
+  position: absolute;
+  padding: 1em;
+  top: 0;
+  left: 0;
+  height: 3em;
+}
