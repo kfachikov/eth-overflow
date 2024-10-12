@@ -12,7 +12,7 @@ const PostCard = (props) => {
   const { post, thisVote, isCollapsed } = props;
   
   const [voteState, setVoteState] = useState(thisVote);
-  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer);
+  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
   const [score, setScore] = useState(post.score)
 
   const handleVote = (vote) => {

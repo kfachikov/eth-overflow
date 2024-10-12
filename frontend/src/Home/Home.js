@@ -4,6 +4,7 @@ import SearchTag from '../Components/SearchTag/SearchTag';  // Import your TagSe
 import PostCard from '../Components/PostCard/PostCard';
 import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Import your ToggleOptions component
 import { getQuestions } from '../services/questionService';  // Import your API function
+import { parsePostFromJSON } from '../Models/PostModel';  // Import your parse function
 import './Home.css';
 
 const HomePage = () => {
@@ -72,9 +73,11 @@ const HomePage = () => {
       ) : (
         <div className="question-list">
           {questions.length > 0 ? (
-            questions.map((question) => (
-              <PostCard key={question.id} post={{...question, isQuestion: true }} />
-            ))
+            questions.map((question) => {
+              return (
+                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+              );
+            })
           ) : (
             <p>No questions found.</p>
           )}
