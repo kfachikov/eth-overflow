@@ -15,17 +15,17 @@ export class AuthenticationMiddleware implements ExpressMiddlewareInterface {
 
     async use(req: Request, res: Response, next: NextFunction): Promise<void> {
         if (res.locals.needAuthentication) {
-            // const email: string = req.headers['x-authentik-email'] as string;
+            const email: string = req.headers['x-authentik-email'] as string;
             // TODO: change at the end
-            const email = "xxx@student.ethz.ch"
+            // const email = "xxx@student.ethz.ch"
 
             let user = await prisma.account.findUnique({ where: { email } });
             if (!user) {
                 // TODO: change at the end
-                // const name: string = req.headers['x-authentik-name'] as string;
-                // const username: string = req.headers['x-authentik-username'] as string;
-                const name = "xxx"
-                const username = "xxx"
+                const name: string = req.headers['x-authentik-name'] as string;
+                const username: string = req.headers['x-authentik-username'] as string;
+                // const name = "xxx"
+                // const username = "xxx"
 
                 user = await prisma.account.create({
                     data: {
