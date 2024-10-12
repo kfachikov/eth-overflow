@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { getTags } from '../../services/tagService';
+import './SearchTag.css'
 
 const SearchTag = ({ onChange }) => {
   const [inputValue, setInputValue] = useState('');
@@ -49,7 +50,7 @@ const SearchTag = ({ onChange }) => {
   };
 
   return (
-    <div>
+    <div className="searchTagDiv">
       <Select
         isMulti
         value={selectedTags}

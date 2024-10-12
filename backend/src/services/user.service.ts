@@ -11,4 +11,12 @@ export class AccountService {
             },
         });
     }
+
+    async getUserById(id: number) {
+        return prisma.account.findUnique({
+            where: {
+                id: id,
+            },
+        });
+    }
 }
