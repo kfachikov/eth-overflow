@@ -56,7 +56,7 @@ code {
   justify-content: space-between;
 }
 
-.gleich {
+.ETHoverflow {
   display: flex;
   flex-direction: row;
   align-items: center;

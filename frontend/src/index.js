@@ -9,7 +9,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <div className="header">
-        <div className = "gleich">
+        <div className = "ETHoverflow">
           <div><img className="eth-logo" src="eth_logo_kurz_kurz.png" alt="Background" /></div>
           <div className="header-title">Overflow</div>
         </div>
