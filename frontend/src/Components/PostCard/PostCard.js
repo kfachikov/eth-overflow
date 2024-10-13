@@ -1,9 +1,11 @@
 import React, { useContext,useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
-import "./PostCard.css";
 import { voteQuestion } from "../../services/questionService";
 import { voteAnswer } from "../../services/answerService";
+<<<<<<< Updated upstream
 import {accountContext} from "../../contexts/userContext";
+=======
+>>>>>>> Stashed changes
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 
