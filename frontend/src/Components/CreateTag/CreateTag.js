@@ -74,9 +74,22 @@ const CreateTag = ({ onChange }) => {
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      outline: state.isFocused ? '2px solid var(--purple60)' : 'none', // Custom border color on focus
+      boxShadow: 'none', // Add box shadow when focused
+      border: '1px solid #ccc',
+      '&:hover': {
+        border: '1px solid #ccc',
+      }
+    })
+  };
+
   return (
     <div>
       <CreatableSelect
+        styles={customStyles}
         isMulti
         createOptionPosition="first"
         value={selectedTags}
