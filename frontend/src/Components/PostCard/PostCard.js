@@ -92,8 +92,6 @@ const PostCard = (props) => {
 
   const handleUpdate = (shouldBeOn) => {
     if (post.isQuestion) {
-      console.log('POST')
-      console.log(post);
       navigate(`/question/${post.postId}/edit`, { state: JSON.stringify(post) });
     } else {
       setEditBoxVisibility(shouldBeOn);

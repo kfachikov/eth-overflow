@@ -20,7 +20,6 @@ export class HttpErrorHandler implements ExpressErrorMiddlewareInterface {
      * @returns the response
      */
     error(err: Error, _req: Request, res: Response, next: (err: Error) => Response | void) {
-        console.log(err);
         if (err instanceof HttpError) {
             return res.status(err.httpCode).json(err);
         }

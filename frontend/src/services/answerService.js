@@ -11,7 +11,6 @@ export const editAnswer = async (questionId, answerId, updatedContent) => {
   const data = {
     content: updatedContent,
   };
-  console.log("POLUDQVAM " + data);
   return await httpService.put(
     `questions/${questionId}/answers/${answerId}`,
     data

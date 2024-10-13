@@ -22,14 +22,10 @@ function QuestionView() {
   }
 
   useEffect(() => {
-      console.log(questionId);
-      console.log(account);
       setLoading(true);
       getQuestionAndAnswers(questionId).then((response) => {
-          console.log(response.data)
           let question = new PostModel()
           question.parsePostFromJSON({...response.data, isQuestion: true, isBestAnswer: false});
-          console.log(question)
           
           let answers = response.data.answers.map((answer) => {
               let answerModel = new PostModel()
@@ -70,11 +66,8 @@ function QuestionView() {
   };
 
   const refreshData = () => {
-    console.log(questionId);
-    console.log(account);
     setLoading(true);
     getQuestionAndAnswers(questionId).then((response) => {
-      console.log(response.data);
       let question = new PostModel();
       question.parsePostFromJSON({
         ...response.data,
