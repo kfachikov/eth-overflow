@@ -22,17 +22,8 @@
   margin-top: 20px;
 }
 
-.pagination-controls button {
-  padding: 10px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .pagination-controls button:disabled {
-  background-color: #6c757d;
+  background-color: var(--gray80);
   cursor: not-allowed;
 }
 
@@ -46,12 +37,14 @@
   grid-column: 1/3;
   grid-row: 2;
 }
+
 .create-question {
   grid-column: 6/8;
   grid-row: 1;
 }
+
 .create-question button {
-  background-color: var(--purple80);
+  background-color: var(--purple);
   color: white;
   border: none;
   border-radius: 4px;
@@ -60,7 +53,11 @@
 }
 
 .create-question button:hover {
-  background-color: var(--purple);
+  background-color: var(--purple120);
+}
+
+.create-question button:active {
+  background-color: var(--purple80);
 }
 
 .createButton {

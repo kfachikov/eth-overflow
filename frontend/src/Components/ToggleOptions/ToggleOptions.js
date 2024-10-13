@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ToggleOptions.css';
 
 const ToggleOptions = ({ onToggle, options }) => {
-  const [activeIndex, setActiveIndex] = useState(3); // Track the index of the active option
+  const [activeIndex, setActiveIndex] = useState(0); // Track the index of the active option
 
   const handleToggle = (index) => {
     setActiveIndex(index);

@@ -52,35 +52,35 @@ const HomePage = (props) => {
       <div className="home-page">
         {/* Search Bar */}
 
-      <div className="searchBar gridbox">
-        <SearchBar onSearch={handleSearch}/>
-      </div>
+          <div className="searchBar gridbox">
+            <SearchBar onSearch={handleSearch}/>
+          </div>
 
-      <div className="tagBar">
-        <SearchTag onChange={handleTagsChange}/>
-      </div>
+          <div className="tagBar">
+            <SearchTag onChange={handleTagsChange}/>
+          </div>
 
-      <div className = "sortToggle gridbox">
-        <ToggleOptions
-          options={['Newest', 'Hot']}
-          onToggle={(val) => {
-              const newOrder = val === "Newest" ? "createdAt" : "score"
-              setOrder(newOrder);
-          }}
-        ></ToggleOptions>
-      </div>
+          <div className = "sortToggle gridbox">
+            <ToggleOptions
+              options={['Newest', 'Hot']}
+              onToggle={(val) => {
+                  const newOrder = val === "Newest" ? "createdAt" : "score"
+                  setOrder(newOrder);
+              }}
+            ></ToggleOptions>
+          </div>
 
-      <div className = "answeredToggle gridbox">
-        <ToggleOptions
-          options={['All', 'Unanswered', 'Answered', 'Solved']}
-          onToggle={(val) => setFilter(val)}
-        ></ToggleOptions>
-      </div>
+          <div className = "answeredToggle gridbox">
+            <ToggleOptions
+              options={['All', 'Unanswered', 'Answered', 'Solved']}
+              onToggle={(val) => setFilter(val)}
+            ></ToggleOptions>
+          </div>
 
-      {/* Create Question Button */}
-      <div className="create-question gridbox">
-        <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
-      </div>
+          {/* Create Question Button */}
+          <div className="create-question gridbox">
+            <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
+          </div>
 
       </div>
       {/* Question List */}
@@ -105,8 +105,8 @@ const HomePage = (props) => {
 
           {/* Pagination Controls */}
           <div className="pagination-controls">
-            <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
+            <Button text="Previous" onClick={handlePrevious} size={ButtonSize.MEDIUM} disabled={offset === 0}/>
+            <Button text="Next" onClick={handleNext} size={ButtonSize.MEDIUM} disabled={questions.length < pageSize}/>
           </div>
         </div>
       )}

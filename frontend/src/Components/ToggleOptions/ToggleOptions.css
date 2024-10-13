@@ -32,6 +32,6 @@
 }
 
 .toggle-button.dimmed {
-  background-color: var(--purple80);
+  background-color: var(--purple);
   color: var(--white);
 }
