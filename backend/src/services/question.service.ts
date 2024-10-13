@@ -93,10 +93,12 @@ export class QuestionService {
                 answers: {
                     include: {
                         comments: true,
+                        author: true,
                     }
                     },
                 comments: true,
                 tags: true,
+                author: true,
             },
         });
     }

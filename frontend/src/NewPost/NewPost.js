@@ -45,7 +45,7 @@ function NewPost() {
   };
 
   const handleTagsChange = (tags) => {
-    setTags(tags.map((tag) => tag.label));
+    setTags(tags);
   };
 
   return (

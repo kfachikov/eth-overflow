@@ -18,7 +18,7 @@ export class VoteQuestionService {
         const initialScore = vote ? vote.upvote ? 1 : -1 : 0;
         const finalScore = voteDto.score
 
-        if (finalScore == 0) {
+        if (vote !== null && finalScore == 0) {
             await prisma.votesOnQuestion.delete({
                 where: {
                     accountId_questionId: {

@@ -11,6 +11,10 @@ export const getQuestions = async (search, tags, offset, limit, order) => {
 
     return await httpService.get(`/questions/all?offset=${offset}&limit=${limit}&order=${order}${search}${tags}`);
 };
+  
+export const getQuestionAndAnswers = async (questionId) => {
+    return await httpService.get(`/questions/${questionId}`);
+};
 
 export const voteQuestion = async (questionId, voteState) => {
     const data = {
