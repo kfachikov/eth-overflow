@@ -180,7 +180,7 @@ export class QuestionService {
         });
 
         const finalScore = question!.score + scoreChange;
-        
+
         return await prisma.question.update({
             where: {
                 id: questionId,
