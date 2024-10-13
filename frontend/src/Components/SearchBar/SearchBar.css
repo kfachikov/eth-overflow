@@ -14,3 +14,5 @@
 .search-bar input:focus {
   outline: 2px solid var(--purple60);
 }
+
+input{box-sizing:border-box} 

@@ -17,16 +17,17 @@ const HomePage = (props) => {
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size
+    const [filter, setFilter] = useState('All');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, tags, offset, pageSize, order).then((response) => {
+    getQuestions(searchTerm, tags, offset, pageSize, order, filter).then((response) => {
       setQuestions(response.data);
       setLoading(false);
     });
-  }, [offset, searchTerm, tags, order]);
+  }, [offset, searchTerm, tags, order, filter]);
 
   // Handle search
   const handleSearch = (term) => {
@@ -47,7 +48,7 @@ const HomePage = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ width: `100%` }}>
       <div className="home-page">
         {/* Search Bar */}
 
@@ -55,7 +56,7 @@ const HomePage = (props) => {
         <SearchBar onSearch={handleSearch}/>
       </div>
 
-      <div className="Bars">
+      <div className="tagBar">
         <SearchTag onChange={handleTagsChange}/>
       </div>
 
@@ -71,7 +72,8 @@ const HomePage = (props) => {
 
       <div className = "answeredToggle gridbox">
         <ToggleOptions
-          options={['Unanswered', 'Answered', 'Solved']}
+          options={['All', 'Unanswered', 'Answered', 'Solved']}
+          onToggle={(val) => setFilter(val)}
         ></ToggleOptions>
       </div>
 
@@ -89,7 +91,12 @@ const HomePage = (props) => {
           {questions.length > 0 ? (
             questions.map((question) => {
               return (
-                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+                <PostCard 
+                  key={question.id} 
+                  post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })}
+                  thisVote={question.vote}
+                  isCollapsed={true}
+                />
               );
             })
           ) : (
