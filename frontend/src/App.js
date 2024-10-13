@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import "./App.css";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
+// import Login from "./Login/Login";
 import NewPost from "./NewPost/NewPost";
 import QuestionView from "./QuestionView/QuestionView";
 import UserProfile from "./UserProfile/UserProfile";
-import HomePage from './Home/Home';
-import Header from './Header/Header';
+import HomePage from "./Home/Home";
+import Header from "./Header/Header";
 
 import './App.css';
 
@@ -28,7 +31,7 @@ const throttle = (mainFunction, delay) => {
 
 function App() {
   const [account, setAccount] = useState(null);
-
+    
   // Function to fetch the user profile
   const fetchUserProfile = () => {
     httpService.get('/user/me').then(response => {

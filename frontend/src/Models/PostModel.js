@@ -11,6 +11,9 @@ class PostModel {
     score;
     isQuestion;
     isBestAnswer;
+    username;
+    thisVote;
+    comments;
 
     constructor(postId, username, authorId, title, content, timestamp, tags, score, isQuestion, isBestAnswer, comments) {
         this.postId = postId;
@@ -23,6 +26,7 @@ class PostModel {
         this.score = score;
         this.isQuestion = isQuestion;
         this.isBestAnswer = isBestAnswer;
+        this.thisVote = undefined;
         this.comments = comments;
 
         return this;        
@@ -38,6 +42,9 @@ class PostModel {
         this.username = jsonObject.author.username;
         this.isBestAnswer = jsonObject.isBestAnswer;
         this.isQuestion = jsonObject.isQuestion;
+        if (jsonObject.vote !== undefined) {
+            this.thisVote = jsonObject.vote;
+        }
         this.tags = jsonObject.tags.map(tag => new TagModel(tag.id, tag.name));
         this.comments = jsonObject.comments
 
