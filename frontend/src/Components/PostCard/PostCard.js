@@ -133,15 +133,20 @@ const PostCard = (props) => {
     }
   };
 
-
   const renderComments = () => {
-    return comments.map((comment, index) => (
-        <div key={index} className="comment">
-          <span className="comment-username">{comment.author.username}</span>
-          <span className="comment-timestamp">{formatDate(comment.createdAt)}</span>
-          <p className="comment-content">{comment.content}</p>
-        </div>
-    ));
+    if (comments.length === 0) {
+      return <span className="small-p">No comments yet.</span>
+    } else {
+      return comments.map((comment, index) => (
+          <div key={index} className="comment">
+            <div className='comment-info'>
+              <span className="comment-username">{comment.author.username}</span>
+              <span className="comment-timestamp">{formatDate(comment.createdAt)}</span>
+            </div>
+            <div className="comment-content">{comment.content}</div>
+          </div>
+      ));
+    }
   };
 
 
@@ -221,22 +226,22 @@ const PostCard = (props) => {
           </div> : null
         }
       </div>
-
-      {!isCollapsed ?
+    </div>
+    {!isCollapsed ?
       <div className="post-comments">
           {/* Render Comments Section */}
           {!isCollapsed && (
               <div className="comments-section">
-                <h4>Comments</h4>
+                <span className="small=p"><b>Comments</b></span>
                 {renderComments()}
                 {(
-                    <div className="comment-input">
+                    <div className='post-comment-area'>
                       <textarea
                           placeholder="Add a comment..."
                           value={comment} // Controlled input
                           onChange={(e) => setComment(e.target.value)}
                       />
-                      <button onClick={handleCommentSubmit}>Post Comment</button>
+                      <Button onClick={handleCommentSubmit} text="Post Comment" size={ButtonSize.SMALL}></Button>
                     </div>
                 )}
               </div>
@@ -278,7 +283,6 @@ const PostCard = (props) => {
           ></Button>
         </div>
     </div> : null}
-  </div>
   </div>
   </>
   );
