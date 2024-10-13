@@ -233,6 +233,48 @@ export class QuestionService {
     }
 
     async selectBestAnswer(questionId: number, answerId: number) {
+        const answer = await prisma.answer.findUnique({
+            where: {
+                id: answerId,
+            }
+        });
+
+        const question = await prisma.question.findUnique({
+            where: {
+                id: questionId,
+            }
+        });
+
+        if (answer?.id !== question?.selectedAnswerId) {
+            await prisma.account.update({
+                where: {
+                    id: answer!.authorId,
+                },
+                data: {
+                    karma: {
+                        increment: 15,
+                    }
+                }
+            });
+
+            const oldAnswer = await prisma.answer.findUnique({
+                where: {
+                    id: question!.selectedAnswerId!,
+                }
+            });
+
+            await prisma.account.update({
+                where: {
+                    id: oldAnswer!.authorId,
+                },
+                data: {
+                    karma: {
+                        decrement: 15,
+                    }
+                }
+            });
+        }
+
         return await prisma.question.update({
             where: {
                 id: questionId,
