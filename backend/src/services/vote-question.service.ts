@@ -17,22 +17,24 @@ export class VoteQuestionService {
         
         const initialScore = vote ? (vote.upvote ? 1 : -1) : 0;
         const finalScore = voteDto.score;
-        
+
         let karmaQuestionPosterUpdate = 0;
 
         if (finalScore == 1 && initialScore == 0) {
-            karmaQuestionPosterUpdate == 10;
+            karmaQuestionPosterUpdate = 10;
         } else if (finalScore == 1 && initialScore == -1) {
-            karmaQuestionPosterUpdate == 12;
+            karmaQuestionPosterUpdate = 12;
         } else if (finalScore == 0 && initialScore == 1) {
-            karmaQuestionPosterUpdate == -10;
+            karmaQuestionPosterUpdate = -10;
         } else if (finalScore == 0 && initialScore == -1) {
-            karmaQuestionPosterUpdate == 2;
+            karmaQuestionPosterUpdate = 2;
         } else if (finalScore == -1 && initialScore == 0) {
-            karmaQuestionPosterUpdate == -10;
+            karmaQuestionPosterUpdate = -10;
         } else if (finalScore == -1 && initialScore == 1) {
-            karmaQuestionPosterUpdate == -12;
+            karmaQuestionPosterUpdate = -12;
         }
+
+        console.log(karmaQuestionPosterUpdate)
 
         const question = await prisma.question.findUnique({
             where: {
