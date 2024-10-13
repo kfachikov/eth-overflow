@@ -1,11 +1,8 @@
-import React, { useContext,useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import { voteQuestion } from "../../services/questionService";
 import { voteAnswer } from "../../services/answerService";
-<<<<<<< Updated upstream
-import {accountContext} from "../../contexts/userContext";
-=======
->>>>>>> Stashed changes
+import { accountContext } from "../../contexts/userContext";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +17,15 @@ const Vote = Object.freeze({
 });
 
 const PostCard = (props) => {
-  const { post, thisVote, isCollapsed, isBestAnswer, userIsQuestionAuthor, userIsThisAuthor, updateBestAnswer } = props;
+  const {
+    post,
+    thisVote,
+    isCollapsed,
+    isBestAnswer,
+    userIsQuestionAuthor,
+    userIsThisAuthor,
+    updateBestAnswer,
+  } = props;
   const navigate = useNavigate();
 
   const [voteState, setVoteState] = useState(thisVote);
@@ -33,7 +38,7 @@ const PostCard = (props) => {
   };
 
   const handleSelectBest = () => {
-    updateBestAnswer()
+    updateBestAnswer();
   };
 
   useEffect(() => {
@@ -45,7 +50,7 @@ const PostCard = (props) => {
       });
     } else {
       voteAnswer(post.postId, voteState).then((response) => {
-        setScore(response.data.score)
+        setScore(response.data.score);
       });
     }
   }, [voteState]);
@@ -77,15 +82,24 @@ const PostCard = (props) => {
           isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
         />
         {userIsQuestionAuthor ? (
-            isBestAnswer
-              ? <div onClick={handleSelectBest} className="selected-checkmark enabled">✔</div>
-              : <div onClick={handleSelectBest} className="unselected-checkmark enabled">✔</div>
+          isBestAnswer ? (
+            <div
+              onClick={handleSelectBest}
+              className="selected-checkmark enabled"
+            >
+              ✔
+            </div>
           ) : (
-            isBestAnswer
-              ? <div className="selected-checkmark">✔</div>
-              : null
-          ) 
-        }
+            <div
+              onClick={handleSelectBest}
+              className="unselected-checkmark enabled"
+            >
+              ✔
+            </div>
+          )
+        ) : isBestAnswer ? (
+          <div className="selected-checkmark">✔</div>
+        ) : null}
       </div>
 
       <div className="post-body">
@@ -105,7 +119,13 @@ const PostCard = (props) => {
         <div className="post-info">
           <span className="tags-box">
             {post.tags.map((tag, index) => (
-              <span onClick={()=>navigate('/home', {label:tag.name, value: tag.id})} key={index} className="tag">
+              <span
+                onClick={() =>
+                  navigate("/home", { label: tag.name, value: tag.id })
+                }
+                key={index}
+                className="tag"
+              >
                 {tag.name}
               </span>
             ))}
@@ -116,12 +136,12 @@ const PostCard = (props) => {
             <span className="timestamp">{post.timestamp}</span>
           </div>
         </div>
-        {userIsThisAuthor ? 
+        {userIsThisAuthor ? (
           <div className="author-panel">
-              <span className="edit-link">Edit</span>
-              <span className="delete-link">Delete</span>
-          </div> : null
-        }
+            <span className="edit-link">Edit</span>
+            <span className="delete-link">Delete</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
