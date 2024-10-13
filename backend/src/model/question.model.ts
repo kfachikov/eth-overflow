@@ -16,6 +16,7 @@ export class SearchQuestionQueryParams {
     limit = 10;
     tags = '';
     order: "createdAt" | "score" = "createdAt";
+    filter: 'All' | 'Unanswered' | 'Answered' | 'Solved' = "All"
 }
 
 export class SelectAnswerDto {

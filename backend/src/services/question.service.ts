@@ -49,7 +49,34 @@ export class QuestionService {
         });
     }
 
-    async getAllQuestions(accountId: number, search: string, tags: string[], offset: number, limit: number, orderByField: string) {
+    async getAllQuestions(accountId: number, search: string, tags: string[], offset: number, limit: number, orderByField: string, filter: string) {
+        const filters: any[] = [];
+
+        // Add filters based on the "filter" argument
+        if (filter === "Solved") {
+            filters.push({
+                NOT: {
+                    selectedAnswer: null
+                }
+            });
+        }
+
+        if (filter === "Answered") {
+            filters.push({
+                answers: {
+                    some: {}, // Filters questions that have at least one answer
+                },
+            });
+        }
+
+        if (filter === "Unanswered") {
+            filters.push({
+                answers: {
+                    none: {}, // Filters questions that have no answers
+                },
+            });
+        }
+
         return await prisma.question.findMany({
             where: {
                 OR: [
@@ -73,6 +100,7 @@ export class QuestionService {
                         }
                     }))
                 }),
+                AND: filters,
             },
             orderBy: {
                 [orderByField]: 'desc',
