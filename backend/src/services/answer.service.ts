@@ -38,7 +38,9 @@ export class AnswerService {
                 id: answerId,
             }
         });
+
         const finalScore = answer!.score + scoreChange;
+        
         return prisma.answer.update({
             where: {
                 id: answerId,

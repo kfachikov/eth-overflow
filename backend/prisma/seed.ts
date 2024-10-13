@@ -42,10 +42,34 @@ async function main() {
     // Create 0-2 answers for the question
     const answerCount = Math.floor(Math.random() * 3);
     for (let j = 1; j <= answerCount; j++) {
-      await prisma.answer.create({
+      const answer = await prisma.answer.create({
         data: {
           content: `This is answer ${j} for question ${i}.`,
           author: { connect: { id: accounts[Math.floor(Math.random() * accounts.length)].id } },
+          question: { connect: { id: question.id } },
+        },
+      });
+
+      // Randomly vote on the answer
+      const votesOnAnswerCount = Math.floor(Math.random() * accounts.length); // Some users might vote on this answer
+      for (let k = 0; k < votesOnAnswerCount; k++) {
+        await prisma.votesOnAnswer.create({
+          data: {
+            upvote: Math.random() > 0.5, // 50% chance of upvote or downvote
+            account: { connect: { id: accounts[k].id } },
+            answer: { connect: { id: answer.id } },
+          },
+        });
+      }
+    }
+
+    // Randomly vote on the question
+    const votesOnQuestionCount = Math.floor(Math.random() * accounts.length); // Some users might vote on this question
+    for (let k = 0; k < votesOnQuestionCount; k++) {
+      await prisma.votesOnQuestion.create({
+        data: {
+          upvote: Math.random() > 0.5, // 50% chance of upvote or downvote
+          account: { connect: { id: accounts[k].id } },
           question: { connect: { id: question.id } },
         },
       });
