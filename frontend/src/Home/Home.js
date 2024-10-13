@@ -73,10 +73,7 @@ const HomePage = (props) => {
       <div className = "answeredToggle gridbox">
         <ToggleOptions
           options={['All', 'Unanswered', 'Answered', 'Solved']}
-          onToggle={(val) => {
-              console.log("filter new: ", val)
-              setFilter(val);
-          }}
+          onToggle={(val) => setFilter(val)}
         ></ToggleOptions>
       </div>
 
