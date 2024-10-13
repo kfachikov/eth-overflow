@@ -114,7 +114,11 @@ export class QuestionService {
                 answers: {
                     include: {
                         author: true,
-                        comments: true,
+                        comments: {
+                            include: {
+                                author: true,
+                            }
+                        },
                         votesOnAnswer: {
                             where: {
                                 accountId,
@@ -122,7 +126,11 @@ export class QuestionService {
                         }
                     }
                 },
-                comments: true,
+                comments: {
+                    include: {
+                        author: true,
+                    }
+                },
                 tags: true,
                 votesOnQuestion: {
                     where: {

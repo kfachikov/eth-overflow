@@ -31,4 +31,15 @@ export class CommentAnswerService {
             },
         });
     }
+
+    async getComments(answerId: number) {
+        return await prisma.commentAnswer.findMany({
+            where: {
+                answerId: answerId,
+            },
+            include: {
+                author: true,
+            }
+        })
+    }
 }

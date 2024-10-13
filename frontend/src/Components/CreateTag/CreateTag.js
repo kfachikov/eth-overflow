@@ -83,7 +83,16 @@ const CreateTag = ({ onChange }) => {
       '&:hover': {
         border: '1px solid #ccc',
       }
-    })
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused || state.isSelected ? 'var(--purple40)' : '#fff', // Purple background on focus or selected, white otherwise
+      color: state.isFocused || state.isSelected ? '#fff' : '#000', // White text on focus/selected, black otherwise
+      '&:active': {
+        backgroundColor: 'var(--purple40)', // Ensure the purple stays when clicking the option
+        color: '#fff', // White text when active
+      }
+    }),
   };
 
   return (

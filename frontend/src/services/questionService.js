@@ -30,3 +30,11 @@ export const selectBestAnswer = async (questionId, answerId) => {
     console.log(data)
     return await httpService.put(`/questions/${questionId}/select`, data)
 }
+
+export const createCommentQuestion = async (questionId, content) => {
+    const data = {
+        content: content,
+    }
+
+    return await httpService.post(`/questions/${questionId}/comments`, data)
+}
