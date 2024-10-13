@@ -164,7 +164,10 @@ const PostCard = (props) => {
             )
           }
         </div>
-        <div className="post-body">
+        <div 
+          onClick={isCollapsed ? () => navigate('/question/' + post.postId) : () => {}}
+          className={"post-body" + (isCollapsed ? " clickable-question" : "")}
+        >
           {post.isQuestion ? <h3 className="post-title">{post.title}</h3> : <></>}
           {post.isQuestion && isCollapsed ? (
             <p
@@ -200,6 +203,7 @@ const PostCard = (props) => {
           ) : null}
         </div>
       </div>
+      {!isCollapsed ?
       <div className="post-comments">
           {/* Render Comments Section */}
           {!isCollapsed && (
@@ -219,7 +223,8 @@ const PostCard = (props) => {
                 )}
               </div>
           )}
-        </div>
+        </div> : null
+      }
     {editBoxVisibility ?
       <div>
         <h5>Edit answer:</h5>
