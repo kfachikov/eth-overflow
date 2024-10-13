@@ -6,10 +6,10 @@ import ToggleOptions from '../Components/ToggleOptions/ToggleOptions';  // Impor
 import { getQuestions } from '../services/questionService';  // Import your API function
 import { parsePostFromJSON } from '../Models/PostModel';  // Import your parse function
 import './Home.css';
+import Button, {ButtonSize} from '../Components/Button';
+import { useNavigate } from 'react-router-dom';
 
-import { useNavigate } from "react-router-dom";
-
-const HomePage = () => {
+const HomePage = (props) => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
   const [searchTerm, setSearchTerm] = useState(''); // Track search term
   const [order, setOrder] = useState('createdAt');
@@ -26,7 +26,6 @@ const HomePage = () => {
       setQuestions(response.data);
       setLoading(false);
     });
-
   }, [offset, searchTerm, tags, order]);
 
   // Handle search
@@ -44,7 +43,7 @@ const HomePage = () => {
   };
 
   const handleTagsChange = (tags) => {
-    setTags(tags.map(tag => tag.label));
+    setTags(tags.map((tag) => tag.label));
   };
 
   return (
@@ -52,61 +51,59 @@ const HomePage = () => {
       <div className="home-page">
         {/* Search Bar */}
 
-        <div className="searchBar gridbox">
-          <SearchBar onSearch={handleSearch}/>
-        </div>
-
-        <div className="tagBar">
-          <SearchTag onChange={handleTagsChange}/>
-        </div>
-
-        <div className = "sortToggle gridbox">
-          <ToggleOptions
-            options={['Newest', 'Hot']}
-            onToggle={(val) => {
-                const newOrder = val === "Newest" ? "createdAt" : "score"
-                setOrder(newOrder);
-            }}
-          ></ToggleOptions>
-        </div>
-
-        <div className = "answeredToggle gridbox">
-          <ToggleOptions
-            options={['Unanswered', 'Answered', 'Solved']}
-          ></ToggleOptions>
-        </div>
-
-        {/* Create Question Button */}
-        <div className="create-question gridbox">
-          <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
-        </div>
+      <div className="searchBar gridbox">
+        <SearchBar onSearch={handleSearch}/>
       </div>
-      <div>
-        {/* Question List */}
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <div className="question-list">
-            {questions.length > 0 ? (
-              questions.map((question) => {
-                return (
-                  <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
-                );
-              })
-            ) : (
-              <p>No questions found.</p>
-            )}
 
-            {/* Pagination Controls */}
-            <div className="pagination-controls">
-              <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-              <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
-            </div>
+      <div className="Bars">
+        <SearchTag onChange={handleTagsChange}/>
+      </div>
+
+      <div className = "sortToggle gridbox">
+        <ToggleOptions
+          options={['Newest', 'Hot']}
+          onToggle={(val) => {
+              const newOrder = val === "Newest" ? "createdAt" : "score"
+              setOrder(newOrder);
+          }}
+        ></ToggleOptions>
+      </div>
+
+      <div className = "answeredToggle gridbox">
+        <ToggleOptions
+          options={['Unanswered', 'Answered', 'Solved']}
+        ></ToggleOptions>
+      </div>
+
+      {/* Create Question Button */}
+      <div className="create-question gridbox">
+        <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
+      </div>
+
+      </div>
+      {/* Question List */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="question-list">
+          {questions.length > 0 ? (
+            questions.map((question) => {
+              return (
+                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+              );
+            })
+          ) : (
+            <p>No questions found.</p>
+          )}
+
+          {/* Pagination Controls */}
+          <div className="pagination-controls">
+            <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
+            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
           </div>
-        )}
-      </div>
-    </div>
-  );
-};
+        </div>
+      )}
+  </div>);  
+}
 
 export default HomePage;
