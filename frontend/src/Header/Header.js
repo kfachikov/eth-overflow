@@ -11,7 +11,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            <Link to="/">
+            <Link to="/home">
                 <img className="eth-logo" src="logo.jpg" alt="Background" />
             </Link>
             <div id="account-container">
