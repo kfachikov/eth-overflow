@@ -27,17 +27,9 @@ function NewPost() {
     const postData = {
       title: title,
       content: content,
-      tags: tags,
+      tags: tags.map((tag) => tag.value),
     };
 
-    // // Here you can make an HTTP POST request to your backend
-    // await fetch("/api/posts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(postData),
-    // });
     await createQuestion(postData);
 
     // After successful post, navigate back to /home
