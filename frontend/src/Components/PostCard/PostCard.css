@@ -170,6 +170,18 @@
   color: darkred;
 }
 
+.clickable-question {
+  cursor: pointer;
+}
+
+.clickable-question:hover {
+  background-color: var(--gray10);
+}
+
+.clickable-question:active {
+  background-color: var(--gray20);
+}
+
 .post-card-body {
   display: flex;
   flex-direction: row;

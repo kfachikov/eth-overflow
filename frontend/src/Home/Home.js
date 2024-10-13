@@ -91,7 +91,12 @@ const HomePage = (props) => {
           {questions.length > 0 ? (
             questions.map((question) => {
               return (
-                <PostCard key={question.id} isCollapsed={true} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false, })} />
+                <PostCard 
+                  key={question.id} 
+                  post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })}
+                  thisVote={question.vote}
+                  isCollapsed={true}
+                />
               );
             })
           ) : (

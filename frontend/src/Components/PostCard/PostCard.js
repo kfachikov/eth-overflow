@@ -4,6 +4,13 @@ import "./PostCard.css";
 import {createCommentQuestion, getQuestionAndAnswers, voteQuestion} from "../../services/questionService";
 import {createCommentAnswer, getComments, voteAnswer} from "../../services/answerService";
 import { useNavigate } from "react-router-dom";
+import { editPost } from "../../services/postService";
+import { ButtonSize } from "../Button";
+import Button from "../Button";
+import { editAnswer } from "../../services/answerService";
+
+import { accountContext } from "../../contexts/userContext";
+import "../../QuestionView/QuestionView.css";
 
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
@@ -21,12 +28,23 @@ const formatDate = (str) => str.replace(
 );
 
 const PostCard = (props) => {
-  const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor } = props;
+  const {
+    post,
+    thisVote,
+    isCollapsed,
+    isBestAnswer,
+    userIsQuestionAuthor,
+    userIsThisAuthor,
+    updateBestAnswer,
+    parentQuestionId,
+    refreshParent
+  } = props;
   const navigate = useNavigate();
 
   const [voteState, setVoteState] = useState(thisVote);
-  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
   const [score, setScore] = useState(post.score);
+  const [editBoxVisibility, setEditBoxVisibility] = useState(false);
+  const [editBoxContent, setEditBoxContent] = useState(post.content);
   const [comments, setComments] = useState(post.comments);
 
   const mdParser = new MarkdownIt().use(markdownItKatex);
@@ -36,7 +54,7 @@ const PostCard = (props) => {
   };
 
   const handleSelectBest = () => {
-    setIsBestAnswer(!isBestAnswer);
+    updateBestAnswer();
   };
 
   useEffect(() => {
@@ -48,11 +66,29 @@ const PostCard = (props) => {
       });
     } else {
       voteAnswer(post.postId, voteState).then((response) => {
-        setScore(response.data.score)
+        setScore(response.data.score);
       });
     }
   }, [voteState]);
 
+  const toggleEdit = (shouldBeOn) => {
+    if (!post.isQuestion) {
+      setEditBoxVisibility(shouldBeOn);
+    } else {
+      // edit question
+    }
+  }
+
+  const handleEditAnswer = () => {
+    editAnswer(parentQuestionId, post.postId, editBoxContent);
+    setEditBoxVisibility(false);
+    refreshParent();
+  };
+
+  const handleDiscardChanges = () => {
+    setEditBoxVisibility(false);
+  }
+  
   const [comment, setComment] = useState(''); // State to hold comment input
 
   const handleCommentSubmit = () => {
@@ -90,6 +126,7 @@ const PostCard = (props) => {
   };
 
   return (
+    <>
     <div
       className={
         "post-card" +
@@ -98,7 +135,6 @@ const PostCard = (props) => {
       }
     >
       <div className="post-card-body">
-
         <div className="vote-buttons">
           <VoteButton
             isUpvote={true}
@@ -128,8 +164,10 @@ const PostCard = (props) => {
             )
           }
         </div>
-
-        <div className="post-body">
+        <div 
+          onClick={isCollapsed ? () => navigate('/question/' + post.postId) : () => {}}
+          className={"post-body" + (isCollapsed ? " clickable-question" : "")}
+        >
           {post.isQuestion ? <h3 className="post-title">{post.title}</h3> : <></>}
           {post.isQuestion && isCollapsed ? (
             <p
@@ -157,38 +195,75 @@ const PostCard = (props) => {
               <span className="timestamp">{formatDate(post.timestamp)}</span>
             </div>
           </div>
-          {userIsThisAuthor ?
+          {userIsThisAuthor ? (
             <div className="author-panel">
-                <span className="edit-link">Edit</span>
-                <span className="delete-link">Delete</span>
-            </div> : null
-          }
-
+              <span onClick={() => toggleEdit(true)}className="edit-link">Edit</span>
+              <span className="delete-link">Delete</span>
+            </div>
+          ) : null}
         </div>
       </div>
+      {!isCollapsed ?
       <div className="post-comments">
-        {/* Render Comments Section */}
-        {!isCollapsed && (
-            <div className="comments-section">
-              <h4>Comments</h4>
-              {renderComments()}
+          {/* Render Comments Section */}
+          {!isCollapsed && (
+              <div className="comments-section">
+                <h4>Comments</h4>
+                {renderComments()}
 
-              {(
-                  <div className="comment-input">
-                    <textarea
-                        placeholder="Add a comment..."
-                        value={comment} // Controlled input
-                        onChange={(e) => setComment(e.target.value)}
-                    />
-                    <button onClick={handleCommentSubmit}>Post Comment</button>
-                  </div>
-              )}
-            </div>
-        )}
-      </div>
-    </div>
+                {(
+                    <div className="comment-input">
+                      <textarea
+                          placeholder="Add a comment..."
+                          value={comment} // Controlled input
+                          onChange={(e) => setComment(e.target.value)}
+                      />
+                      <button onClick={handleCommentSubmit}>Post Comment</button>
+                    </div>
+                )}
+              </div>
+          )}
+        </div> : null
+      }
+    {editBoxVisibility ?
+      <div>
+        <h5>Edit answer:</h5>
+        <div className="editor-container">
+          <div className="editor-group">
+              <textarea
+              className="input-field"
+              value={editBoxContent}
+              onChange={(e) => setEditBoxContent(e.target.value)}
+              placeholder="Write your answer here.&#10;&#8204;&#10;&#8204;&#10;Markdown and Latex supported.&#10;&#8204;&#10;&#8204;&#10;Preview on the right."
+              ></textarea>
+          </div>
+          <div className="editor-group">
+              <div
+              className="input-preview"
+              dangerouslySetInnerHTML={{
+                  __html: mdParser.render(editBoxContent),
+              }}
+              ></div>
+          </div>
+        </div>
+        <div className="button-container">
+          <Button
+              onClick={handleDiscardChanges}
+              text="Discard Changes"
+              ButtonSize={ButtonSize.SMALL}
+              isDelete={true}
+          ></Button>
+          <Button
+              onClick={handleEditAnswer}
+              text="Submit Changes"
+              ButtonSize={ButtonSize.SMALL}
+          ></Button>
+        </div>
+    </div> : null}
+  </div>
+  </>
   );
-};
+}
 
 export default PostCard;
 export { Vote };
