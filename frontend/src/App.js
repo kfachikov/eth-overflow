@@ -10,6 +10,7 @@ import './App.css';
 
 import { accountContext } from './contexts/userContext';
 import httpService from './services/httpService';
+import EditPost from './EditPost/EditPost';
 
 const throttle = (mainFunction, delay) => {
   let timerFlag = null; // Variable to keep track of the timer
@@ -70,6 +71,7 @@ function App() {
           <Route path="/newpost" element={<NewPost />} />
           <Route path="/question/create" element={<NewPost />} />
           <Route path="/question/:questionId" element={<QuestionView />} />
+          <Route path="/question/:questionId/edit" element={<EditPost />} />
           <Route path="/userprofile/:username" element={<UserProfile />} />
         </Routes>
       </accountContext.Provider>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CreatableSelect from "react-select/creatable";
 import { createTag, getTags } from "../../services/tagService";
 
-const CreateTag = ({ onChange }) => {
+const CreateTag = ({ onChange, tags }) => {
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState([]); // Available tag options
   const [selectedTags, setSelectedTags] = useState([]); // Selected tags
@@ -11,6 +11,10 @@ const CreateTag = ({ onChange }) => {
   useEffect(() => {
     fetchTags();
   }, []);
+
+  useEffect(() => {
+    setSelectedTags(tags);
+  }, [tags]);
 
   const fetchTags = async () => {
     try {

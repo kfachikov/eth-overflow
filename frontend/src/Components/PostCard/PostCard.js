@@ -1,9 +1,8 @@
-import React, { useContext,useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
 import { voteQuestion } from "../../services/questionService";
 import { deleteAnswer, voteAnswer } from "../../services/answerService";
-import {accountContext} from "../../contexts/userContext";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
 
@@ -71,6 +70,15 @@ const PostCard = (props) => {
       });
     }
   }
+
+  const handleUpdate = () => {
+    if (post.isQuestion) {
+      console.log('POST')
+      console.log(post);
+      navigate(`/question/${post.postId}/edit`, { state: JSON.stringify(post) });
+    }
+  }
+
   return (
     <div
       className={
@@ -126,7 +134,7 @@ const PostCard = (props) => {
         <div className="post-info">
           <span className="tags-box">
             {post.tags.map((tag, index) => (
-              <span onClick={()=>navigate('/home', {label:tag.name, value: tag.id})} key={index} className="tag">
+              <span onClick={()=>navigate('/home', {label: tag.name, value: tag.id})} key={index} className="tag">
                 {tag.name}
               </span>
             ))}
@@ -139,7 +147,7 @@ const PostCard = (props) => {
         </div>
         {userIsThisAuthor ? 
           <div className="author-panel">
-              <span className="edit-link">Edit</span>
+              <span className="edit-link" onClick={handleUpdate}>Edit</span>
               <span className="delete-link" onClick={handleDelete}>Delete</span>
           </div> : null
         }
