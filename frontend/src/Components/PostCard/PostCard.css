@@ -3,6 +3,7 @@
   align-items: center; /* Centers items vertically */
   width: 100%;
   background-color: var(--white);
+  flex-grow: 1;
 }
 
 .selected-answer-card {

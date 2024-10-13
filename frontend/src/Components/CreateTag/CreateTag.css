@@ -1,9 +1,13 @@
 .badge {
-    background-color: #007bff;
+    background-color: var(--purple40);
     color: white;
     padding: 5px 10px;
     border-radius: 12px;
     margin-right: 5px;
     display: inline-block;
+  }
+  
+  .create-tag {
+    width: 100%;
   }
   

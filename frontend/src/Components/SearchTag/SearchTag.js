@@ -45,6 +45,27 @@ const SearchTag = ({ onChange }) => {
     }
   };
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      outline: state.isFocused ? '2px solid var(--purple60)' : 'none', // Custom border color on focus
+      boxShadow: 'none', // Add box shadow when focused
+      border: '1px solid #ccc',
+      '&:hover': {
+        border: '1px solid #ccc',
+      }
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused || state.isSelected ? 'var(--purple40)' : '#fff', // Purple background on focus or selected, white otherwise
+      color: state.isFocused || state.isSelected ? '#fff' : '#000', // White text on focus/selected, black otherwise
+      '&:active': {
+        backgroundColor: 'var(--purple40)', // Ensure the purple stays when clicking the option
+        color: '#fff', // White text when active
+      }
+    }),
+  };
+
   const customFilter = (option, inputValue) => {
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
@@ -52,6 +73,7 @@ const SearchTag = ({ onChange }) => {
   return (
     <div className="searchTagDiv">
       <Select
+        styles={customStyles}
         isMulti
         value={selectedTags}
         options={options}
