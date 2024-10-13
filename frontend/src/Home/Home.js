@@ -23,6 +23,8 @@ const HomePage = (props) => {
   useEffect(() => {
     setLoading(true);
     getQuestions(searchTerm, tags, offset, pageSize, order).then((response) => {
+        console.log("response:", response);
+        console.log(response.data);
       setQuestions(response.data);
       setLoading(false);
     });
@@ -89,7 +91,7 @@ const HomePage = (props) => {
           {questions.length > 0 ? (
             questions.map((question) => {
               return (
-                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+                <PostCard key={question.id} isCollapsed={true} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false, })} />
               );
             })
           ) : (

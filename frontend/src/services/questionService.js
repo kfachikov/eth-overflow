@@ -22,3 +22,11 @@ export const voteQuestion = async (questionId, voteState) => {
     }
     return await httpService.put(`/questions/${questionId}/vote`, data)
 }
+
+export const createCommentQuestion = async (questionId, content) => {
+    const data = {
+        content: content,
+    }
+
+    return await httpService.post(`/questions/${questionId}/comments`, data)
+}
