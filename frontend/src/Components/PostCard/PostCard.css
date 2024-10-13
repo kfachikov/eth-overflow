@@ -76,12 +76,23 @@
   margin-right: 8px;
 }
 
+.comment-username {
+  font-weight: bold;
+  margin-right: 8px;
+  font-size: x-small;
+}
+
 .score {
   font-size: 20px;
 }
 
 .timestamp {
   color: var(--gray40);
+}
+
+.comment-timestamp {
+  color: var(--gray40);
+  font-size: x-small;
 }
 
 .vote-buttons {
@@ -127,7 +138,7 @@
 }
 
 .enabled {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .enabled:hover {
