@@ -25,12 +25,13 @@ const Header = () => {
                             <img className="reputation-icon" src="../../reputation.svg" alt="Reputation" />
                             <span id="account-karma">{account.account.karma}</span>
                         </span>
-                        <Link
-                            id="account-logout"
-                            href="https://auth.viscon-hackathon.ch/"
-                            referrerPolicy="no-referrer">
-                                <img className="logout-icon" src="../../logout_icon.svg" alt="Logout" />
-                        </Link>
+                        <div id="account-logout">
+                            <a
+                                href="https://auth.viscon-hackathon.ch/"
+                                referrerPolicy="no-referrer">
+                                    <img className="logout-icon" src="../../logout_icon.svg" alt="Logout" />
+                            </a>
+                        </div>
                     </div>
                 }
             </div>
