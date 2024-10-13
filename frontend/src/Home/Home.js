@@ -23,8 +23,6 @@ const HomePage = (props) => {
   useEffect(() => {
     setLoading(true);
     getQuestions(searchTerm, tags, offset, pageSize, order).then((response) => {
-        console.log("response:", response);
-        console.log(response.data);
       setQuestions(response.data);
       setLoading(false);
     });
