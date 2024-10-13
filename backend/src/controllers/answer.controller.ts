@@ -3,13 +3,11 @@ import { Service } from 'typedi';
 import {AnswerService} from "../services/answer.service";
 import {AnswerCreateDto, AnswerUpdateDto} from "../model/answer.model";
 import { Request } from 'express';
-import {VoteDto} from "../model/vote.model";
-import {VoteAnswerService} from "../services/vote-answer.service";
 
 @JsonController('/questions/:questionId/answers')
 @Service()
 export class AnswerController {
-    constructor(private answerService: AnswerService, private voteAnswerService: VoteAnswerService) {}
+    constructor(private answerService: AnswerService) {}
 
     @Post('/')
     async createAnswer(@Param('questionId') questionId: number, @Body() answerCreateDto: AnswerCreateDto, @Req() req: Request) {
