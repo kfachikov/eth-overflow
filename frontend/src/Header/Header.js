@@ -26,7 +26,11 @@ const Header = () => {
                             <span id="account-karma">{account.account.karma}</span>
                         </span>
                         <div id="account-logout">
-                            <img className="logout-icon" src="../../logout_icon.svg" alt="Logout" />
+                            <Link
+                                href="https://auth.viscon-hackathon.ch/"
+                                referrerPolicy="no-referrer">
+                                <img className="logout-icon" src="../../logout_icon.svg" alt="Logout" />
+                            </Link>
                         </div>
                     </div>
                 }
