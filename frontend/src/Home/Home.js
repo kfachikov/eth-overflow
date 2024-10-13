@@ -8,11 +8,11 @@ import { parsePostFromJSON } from "../Models/PostModel"; // Import your parse fu
 import "./Home.css";
 import Button, { ButtonSize } from "../Components/Button";
 
-const HomePage = () => {
+const HomePage = (props) => {
   const [questions, setQuestions] = useState([]); // Store the list of questions
   const [searchTerm, setSearchTerm] = useState(""); // Track search term
   const [order, setOrder] = useState("createdAt");
-  const [tags, setTags] = useState([]); // Track selected tags
+  const [tags, setTags] = useState([{label: props.label, name:props.name}]); // Track selected tags
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size

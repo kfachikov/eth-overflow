@@ -6,6 +6,7 @@ import { voteAnswer } from "../../services/answerService";
 import React, { useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
+import { useNavigate } from "react-router-dom";
 
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
@@ -18,6 +19,7 @@ const Vote = Object.freeze({
 });
 
 const PostCard = (props) => {
+  const navigate = useNavigate();
   const { post, thisVote, isCollapsed } = props;
 
   const [voteState, setVoteState] = useState(thisVote);
@@ -104,7 +106,7 @@ const PostCard = (props) => {
         <div className="post-info">
           <span className="tags-box">
             {post.tags.map((tag, index) => (
-              <span key={index} className="tag">
+              <span onClick={()=>navigate('/home', {label:tag.name, value: tag.id})} key={index} className="tag">
                 {tag.name}
               </span>
             ))}
