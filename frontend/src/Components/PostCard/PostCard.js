@@ -5,6 +5,11 @@ import { voteAnswer } from "../../services/answerService";
 import { accountContext } from "../../contexts/userContext";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
+import { editPost } from "../../services/postService";
+import { ButtonSize } from "../Button";
+import Button from "../Button";
+import { editAnswer } from "../../services/answerService";
+import "../../QuestionView/QuestionView.css";
 
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
@@ -25,11 +30,15 @@ const PostCard = (props) => {
     userIsQuestionAuthor,
     userIsThisAuthor,
     updateBestAnswer,
+    parentQuestionId,
+    refreshParent
   } = props;
   const navigate = useNavigate();
 
   const [voteState, setVoteState] = useState(thisVote);
   const [score, setScore] = useState(post.score);
+  const [editBoxVisibility, setEditBoxVisibility] = useState(false);
+  const [editBoxContent, setEditBoxContent] = useState(post.content);
 
   const mdParser = new MarkdownIt().use(markdownItKatex);
 
@@ -55,7 +64,26 @@ const PostCard = (props) => {
     }
   }, [voteState]);
 
+  const toggleEdit = (shouldBeOn) => {
+    if (!post.isQuestion) {
+      setEditBoxVisibility(shouldBeOn);
+    } else {
+      // edit question
+    }
+  }
+
+  const handleEditAnswer = () => {
+    editAnswer(parentQuestionId, post.postId, editBoxContent);
+    setEditBoxVisibility(false);
+    refreshParent();
+  };
+
+  const handleDiscardChanges = () => {
+    setEditBoxVisibility(false);
+  };
+
   return (
+    <>
     <div
       className={
         "post-card" +
@@ -138,12 +166,48 @@ const PostCard = (props) => {
         </div>
         {userIsThisAuthor ? (
           <div className="author-panel">
-            <span className="edit-link">Edit</span>
+            <span onClick={() => toggleEdit(true)}className="edit-link">Edit</span>
             <span className="delete-link">Delete</span>
           </div>
         ) : null}
       </div>
     </div>
+    {editBoxVisibility ?
+      <div>
+        <h5>Edit answer:</h5>
+        <div className="editor-container">
+          <div className="editor-group">
+              <textarea
+              className="input-field"
+              value={editBoxContent}
+              onChange={(e) => setEditBoxContent(e.target.value)}
+              placeholder="Write your answer here.&#10;&#8204;&#10;&#8204;&#10;Markdown and Latex supported.&#10;&#8204;&#10;&#8204;&#10;Preview on the right."
+              ></textarea>
+          </div>
+          <div className="editor-group">
+              <div
+              className="input-preview"
+              dangerouslySetInnerHTML={{
+                  __html: mdParser.render(editBoxContent),
+              }}
+              ></div>
+          </div>
+        </div>
+        <div className="button-container">
+          <Button
+              onClick={handleDiscardChanges}
+              text="Discard Changes"
+              ButtonSize={ButtonSize.SMALL}
+              isDelete={true}
+          ></Button>
+          <Button
+              onClick={handleEditAnswer}
+              text="Submit Changes"
+              ButtonSize={ButtonSize.SMALL}
+          ></Button>
+        </div>
+    </div> : null}
+    </>
   );
 };
 

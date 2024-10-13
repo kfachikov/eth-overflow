@@ -27,5 +27,6 @@ export const selectBestAnswer = async (questionId, answerId) => {
     const data = {
         answerId: answerId
     }
+    console.log(data)
     return await httpService.put(`/questions/${questionId}/select`, data)
 }
