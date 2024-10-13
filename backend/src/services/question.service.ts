@@ -77,6 +77,18 @@ export class QuestionService {
             });
         }
 
+        if (tags.length > 0) {
+            tags.map((tag) => {
+                filters.push({
+                    tags: {
+                        some: {
+                            name: tag
+                        }
+                    }
+                })
+            })
+        }
+
         return await prisma.question.findMany({
             where: {
                 OR: [
@@ -91,15 +103,6 @@ export class QuestionService {
                         },
                     },
                 ],
-            ...(tags.length > 0 && {
-                    AND: tags.map((tag) => ({
-                        tags: {
-                            some: {
-                                name: tag
-                            }
-                        }
-                    }))
-                }),
                 AND: filters,
             },
             orderBy: {
