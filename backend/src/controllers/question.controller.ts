@@ -3,7 +3,7 @@ import { Service } from 'typedi';
 import { QuestionService } from '../services/question.service';
 import { QuestionCreateDto, QuestionUpdateDto, SearchQuestionQueryParams, SelectAnswerDto } from '../model/question.model';
 import {VoteDto} from "../model/vote.model";
-import { Request } from 'express';
+import { Request, RequestHandler } from 'express';
 import {VoteQuestionService} from "../services/vote-question.service";
 
 @JsonController('/questions')
@@ -39,8 +39,10 @@ export class QuestionController {
     }
 
     @Get('/:questionId')
-    async getQuestionById(@Param('questionId') questionId: number) {
-        return await this.questionService.getQuestionWithAnswers(questionId);
+    async getQuestionById(@Req() req: RequestHandler, @Param('questionId') questionId: number) {
+        // @ts-ignore
+        const accountId = req.userId;
+        return await this.questionService.getQuestionWithAnswers(accountId, questionId);
     }
 
     @Get('/')
