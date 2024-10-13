@@ -3,8 +3,6 @@ import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
 import { voteQuestion } from "../../services/questionService";
 import { voteAnswer } from "../../services/answerService";
-import React, { useState } from "react";
-import VoteButton from "../VoteButton/VoteButton";
 import {accountContext} from "../../contexts/userContext";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
