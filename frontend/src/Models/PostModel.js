@@ -11,6 +11,7 @@ class PostModel {
     score;
     isQuestion;
     isBestAnswer;
+    username;
 
     constructor(postId, username, authorId, title, content, timestamp, tags, score, isQuestion, isBestAnswer) {
         this.postId = postId;

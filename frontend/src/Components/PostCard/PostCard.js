@@ -18,11 +18,10 @@ const Vote = Object.freeze({
 });
 
 const PostCard = (props) => {
-  const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor } = props;
+  const { post, thisVote, isCollapsed, isBestAnswer, userIsQuestionAuthor, userIsThisAuthor, updateBestAnswer } = props;
   const navigate = useNavigate();
 
   const [voteState, setVoteState] = useState(thisVote);
-  const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
   const [score, setScore] = useState(post.score);
 
   const mdParser = new MarkdownIt().use(markdownItKatex);
@@ -32,7 +31,7 @@ const PostCard = (props) => {
   };
 
   const handleSelectBest = () => {
-    setIsBestAnswer(!isBestAnswer);
+    updateBestAnswer()
   };
 
   useEffect(() => {

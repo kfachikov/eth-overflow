@@ -22,3 +22,10 @@ export const voteQuestion = async (questionId, voteState) => {
     }
     return await httpService.put(`/questions/${questionId}/vote`, data)
 }
+
+export const selectBestAnswer = async (questionId, answerId) => {
+    const data = {
+        answerId: answerId
+    }
+    return await httpService.put(`/questions/${questionId}/select`, data)
+}

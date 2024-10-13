@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./QuestionView.css";
-import { getQuestionAndAnswers } from "../services/questionService";
+import { getQuestionAndAnswers, selectBestAnswer } from "../services/questionService";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import PostCard from "../Components/PostCard/PostCard";
@@ -13,6 +13,17 @@ function QuestionView() {
     const [loading, setLoading] = useState(true);
     const [question, setQuestion] = useState(null);
     const [answers, setAnswers] = useState([]);
+    const [bestAnswerId, setBestAnswerId] = useState(null);
+
+    const updateBestAnswer = (answerId) => {
+        let selectedAnswerId = null;
+        if (answerId !== bestAnswerId) {
+            selectedAnswerId = answerId;
+        } 
+
+        setBestAnswerId(answerId);
+        selectBestAnswer(questionId, answerId);
+    }
 
     useEffect(() => {
         console.log(questionId);
@@ -33,6 +44,9 @@ function QuestionView() {
                     isQuestion: false, 
                     isBestAnswer: isBestAnswer}
                 );
+                if (isBestAnswer) {
+                    setBestAnswerId(answerModel.postId);
+                }
                 return answerModel;
             });
 
@@ -50,16 +64,20 @@ function QuestionView() {
             <PostCard 
                 post={question}
                 thisVote={false}
+                isBestAnswer={false}
                 userIsQuestionAuthor={false} 
                 userIsThisAuthor={account.id === question.authorId}
+                updateBestAnswer={() => {}}
             />
             {answers.map((answer, index) =>
                 <PostCard 
                     key={index} 
                     post={answer} 
-                    thisVote={false} 
+                    thisVote={false}
+                    isBestAnswer={answer.postId === bestAnswerId}
                     userIsQuestionAuthor={account.id === question.authorId}
-                    userIsThisAuthor={account.id === answer.authorId}>
+                    userIsThisAuthor={account.id === answer.authorId}
+                    updateBestAnswer={() => updateBestAnswer(answer.postId)}>
                 </PostCard>
             )}
         </>
