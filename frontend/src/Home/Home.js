@@ -48,7 +48,7 @@ const HomePage = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ width: `100%` }}>
       <div className="home-page">
         {/* Search Bar */}
 
@@ -56,7 +56,7 @@ const HomePage = (props) => {
         <SearchBar onSearch={handleSearch}/>
       </div>
 
-      <div className="Bars">
+      <div className="tagBar">
         <SearchTag onChange={handleTagsChange}/>
       </div>
 
