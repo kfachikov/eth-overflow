@@ -257,22 +257,26 @@ export class QuestionService {
                 }
             });
 
-            const oldAnswer = await prisma.answer.findUnique({
-                where: {
-                    id: question!.selectedAnswerId!,
-                }
-            });
-
-            await prisma.account.update({
-                where: {
-                    id: oldAnswer!.authorId,
-                },
-                data: {
-                    karma: {
-                        decrement: 15,
+            if (question!.selectedAnswerId) {
+                const oldAnswer = await prisma.answer.findUnique({
+                    where: {
+                        id: question!.selectedAnswerId!,
                     }
+                });
+    
+                if (oldAnswer) {
+                    await prisma.account.update({
+                        where: {
+                            id: oldAnswer!.authorId,
+                        },
+                        data: {
+                            karma: {
+                                decrement: 15,
+                            }
+                        }
+                    });
                 }
-            });
+            }
         }
 
         return await prisma.question.update({
