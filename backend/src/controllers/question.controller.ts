@@ -35,7 +35,7 @@ export class QuestionController {
         params.limit = +params.limit;
         const tags = params.tags ? params.tags.split(',') : [];
         // @ts-ignore
-        return await this.questionService.getAllQuestions(req.userId, params.search, tags, params.offset, params.limit, params.order);
+        return await this.questionService.getAllQuestions(req.userId, params.search, tags, params.offset, params.limit, params.order, params.filter);
     }
 
     @Get('/:questionId')

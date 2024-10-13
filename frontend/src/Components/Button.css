@@ -2,13 +2,13 @@
     background-color: var(--purple);
     color: white;
     font-family: Arial;
-    border: none;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     transition: 0.15s;
     white-space: nowrap;
+    border-radius: 4px;
 }
 
 .button:hover {

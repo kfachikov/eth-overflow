@@ -17,16 +17,17 @@ const HomePage = (props) => {
   const [loading, setLoading] = useState(true); // Loading state
   const [offset, setOffset] = useState(0); // For pagination
   const pageSize = 10; // Page size
+    const [filter, setFilter] = useState('All');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(searchTerm, tags, offset, pageSize, order).then((response) => {
+    getQuestions(searchTerm, tags, offset, pageSize, order, filter).then((response) => {
       setQuestions(response.data);
       setLoading(false);
     });
-  }, [offset, searchTerm, tags, order]);
+  }, [offset, searchTerm, tags, order, filter]);
 
   // Handle search
   const handleSearch = (term) => {
@@ -47,38 +48,39 @@ const HomePage = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ width: `100%` }}>
       <div className="home-page">
         {/* Search Bar */}
 
-      <div className="searchBar gridbox">
-        <SearchBar onSearch={handleSearch}/>
-      </div>
+          <div className="searchBar gridbox">
+            <SearchBar onSearch={handleSearch}/>
+          </div>
 
-      <div className="Bars">
-        <SearchTag onChange={handleTagsChange}/>
-      </div>
+          <div className="tagBar">
+            <SearchTag onChange={handleTagsChange}/>
+          </div>
 
-      <div className = "sortToggle gridbox">
-        <ToggleOptions
-          options={['Newest', 'Hot']}
-          onToggle={(val) => {
-              const newOrder = val === "Newest" ? "createdAt" : "score"
-              setOrder(newOrder);
-          }}
-        ></ToggleOptions>
-      </div>
+          <div className = "sortToggle gridbox">
+            <ToggleOptions
+              options={['Newest', 'Hot']}
+              onToggle={(val) => {
+                  const newOrder = val === "Newest" ? "createdAt" : "score"
+                  setOrder(newOrder);
+              }}
+            ></ToggleOptions>
+          </div>
 
-      <div className = "answeredToggle gridbox">
-        <ToggleOptions
-          options={['Unanswered', 'Answered', 'Solved']}
-        ></ToggleOptions>
-      </div>
+          <div className = "answeredToggle gridbox">
+            <ToggleOptions
+              options={['All', 'Unanswered', 'Answered', 'Solved']}
+              onToggle={(val) => setFilter(val)}
+            ></ToggleOptions>
+          </div>
 
-      {/* Create Question Button */}
-      <div className="create-question gridbox">
-        <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
-      </div>
+          {/* Create Question Button */}
+          <div className="create-question gridbox">
+            <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
+          </div>
 
       </div>
       {/* Question List */}
@@ -103,8 +105,8 @@ const HomePage = (props) => {
 
           {/* Pagination Controls */}
           <div className="pagination-controls">
-            <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
+            <Button text="Previous" onClick={handlePrevious} size={ButtonSize.MEDIUM} disabled={offset === 0}/>
+            <Button text="Next" onClick={handleNext} size={ButtonSize.MEDIUM} disabled={questions.length < pageSize}/>
           </div>
         </div>
       )}

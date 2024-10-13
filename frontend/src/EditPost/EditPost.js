@@ -1,25 +1,39 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./NewPost.css";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./EditPost.css";
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
 import "katex/dist/katex.min.css"; // Import Katex CSS
 
-import { createQuestion } from "../services/postService";
 import CreateTag from "../Components/CreateTag/CreateTag";
 import Button, { ButtonSize } from "../Components/Button";
+import { updateQuestion } from '../services/questionService';
 
-function NewPost() {
+function EditPost() {
+  const { state } = useLocation()
+  const [questionId, setQuestionId] = useState(0);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const post = JSON.parse(state);
+    setQuestionId(post.postId);
+    setTitle(post.title);
+    setContent(post.content);
+    setTags(post.tags.map((tag) => ({ value: tag.tagId, label: tag.name })));
+  }, [state]);
+
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
+
   // Initialize markdown-it with markdown-it-katex plugin
   const mdParser = new MarkdownIt().use(markdownItKatex);
 
   const handleCancel = () => {
-    navigate("/home");
+    navigate(`/question/${questionId}`);
   };
 
   const handlePost = async () => {
@@ -29,10 +43,11 @@ function NewPost() {
       tags: tags.map((tag) => tag.value),
     };
 
-    await createQuestion(postData);
-
-    // After successful post, navigate back to /home
-    navigate("/home");
+    await updateQuestion(questionId, postData).then(() => {
+      navigate(`/question/${questionId}`);
+    }).catch((_error) => {
+      alert("Failed to update the question!");
+    });
   };
 
   const handleTagsChange = (tags) => {
@@ -54,7 +69,7 @@ function NewPost() {
 
       <div className="form-group">
         <label htmlFor="tags">Tags</label>
-        <CreateTag onChange={handleTagsChange} />
+        <CreateTag tags={tags} onChange={handleTagsChange} />
       </div>
 
       <div className="form-group">
@@ -86,13 +101,13 @@ function NewPost() {
 
       <div className="form-actions">
         <Button
-          text="Cancel"
+          text="Discard Changes"
           onClick={handleCancel}
           isDelete={true}
           size={ButtonSize.MEDIUM}
         ></Button>
         <Button
-          text="Post"
+          text="Save"
           onClick={handlePost}
           size={ButtonSize.MEDIUM}
         ></Button>
@@ -101,4 +116,4 @@ function NewPost() {
   );
 }
 
-export default NewPost;
+export default EditPost;
