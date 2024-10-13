@@ -24,8 +24,8 @@ export const postAnswer = async (questionId, content) => {
   return await httpService.post(`/questions/${questionId}/answers`, data);
 };
 
-export const deleteAnswer = async (answerId) => {
-    return await httpService.delete(`/answers/${answerId}`);
+export const deleteAnswer = async (questionId, answerId) => {
+    return await httpService.delete(`questions/${questionId}/answers/${answerId}`);
 }
 
 export const createCommentAnswer = async (answerId, content) => {

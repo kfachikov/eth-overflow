@@ -82,7 +82,7 @@ const PostCard = (props) => {
         alert("Failed to delete the question!");
       }); 
     } else {
-      deleteAnswer(post.postId).then(() => {
+      deleteAnswer(parentQuestionId, post.postId).then(() => {
         onAnswerDelete(post.postId);
       }).catch((error) => {
         alert("Failed to delete the answer!");

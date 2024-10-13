@@ -17,8 +17,8 @@ function QuestionView() {
   const { account } = useContext(accountContext);
   const { questionId } = useParams();
 
-  const onAnswerDelete = (answerId) => {
-      setAnswers(answers.filter((answer) => answer.id !== answerId));
+  const onAnswerDelete = () => {
+      refreshData()
   }
 
   useEffect(() => {
@@ -68,6 +68,7 @@ function QuestionView() {
   const refreshData = () => {
     setLoading(true);
     getQuestionAndAnswers(questionId).then((response) => {
+      if (!response.data) return;
       let question = new PostModel();
       question.parsePostFromJSON({
         ...response.data,
