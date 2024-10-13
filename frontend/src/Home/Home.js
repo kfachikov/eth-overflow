@@ -80,6 +80,7 @@ const HomePage = (props) => {
         <button onClick={handleCreateQuestion} className="gridbox createButton">Create Question</button>
       </div>
 
+      </div>
       {/* Question List */}
       {loading ? (
         <p>Loading...</p>
@@ -102,7 +103,6 @@ const HomePage = (props) => {
           </div>
         </div>
       )}
-    </div>
   </div>);  
 }
 
