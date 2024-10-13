@@ -110,8 +110,10 @@ export class QuestionService {
         return await prisma.question.findUnique({
             where: { id: questionId },
             include: {
+                author: true,
                 answers: {
                     include: {
+                        author: true,
                         comments: true,
                         votesOnAnswer: {
                             where: {
