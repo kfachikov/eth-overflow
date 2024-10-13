@@ -23,6 +23,14 @@ export const voteQuestion = async (questionId, voteState) => {
     return await httpService.put(`/questions/${questionId}/vote`, data)
 }
 
+export const deleteQuestion = async (questionId) => {
+    return await httpService.delete(`/questions/${questionId}`);
+}
+
+export const updateQuestion = async (questionId, data) => {
+    return await httpService.put(`/questions/${questionId}`, data);
+}
+
 export const selectBestAnswer = async (questionId, answerId) => {
     const data = {
         answerId: answerId

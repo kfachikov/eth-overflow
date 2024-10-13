@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
+import { deleteAnswer } from "../../services/answerService";
+import "./PostCard.css";
 import {createCommentQuestion, getQuestionAndAnswers, voteQuestion} from "../../services/questionService";
-import {createCommentAnswer, getComments, voteAnswer} from "../../services/answerService";
+import {createCommentAnswer, getComments, voteAnswer } from "../../services/answerService";
 import { useNavigate } from "react-router-dom";
-import { editPost } from "../../services/postService";
 import { ButtonSize } from "../Button";
 import Button from "../Button";
 import { editAnswer } from "../../services/answerService";
 
-import { accountContext } from "../../contexts/userContext";
 import "../../QuestionView/QuestionView.css";
+
+import { deleteQuestion } from '../../services/questionService';
 
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
@@ -37,7 +39,8 @@ const PostCard = (props) => {
     userIsThisAuthor,
     updateBestAnswer,
     parentQuestionId,
-    refreshParent
+    refreshParent,
+    onAnswerDelete
   } = props;
   const navigate = useNavigate();
 
@@ -71,13 +74,31 @@ const PostCard = (props) => {
     }
   }, [voteState]);
 
-  const toggleEdit = (shouldBeOn) => {
-    if (!post.isQuestion) {
-      setEditBoxVisibility(shouldBeOn);
+  const handleDelete = () => {
+    if (post.isQuestion) {
+      deleteQuestion(post.postId).then(() => {
+        navigate('/home');
+      }).catch((error) => {
+        alert("Failed to delete the question!");
+      }); 
     } else {
-      // edit question
+      deleteAnswer(post.postId).then(() => {
+        onAnswerDelete(post.postId);
+      }).catch((error) => {
+        alert("Failed to delete the answer!");
+      });
     }
-  }
+  };
+
+  const handleUpdate = (shouldBeOn) => {
+    if (post.isQuestion) {
+      console.log('POST')
+      console.log(post);
+      navigate(`/question/${post.postId}/edit`, { state: JSON.stringify(post) });
+    } else {
+      setEditBoxVisibility(shouldBeOn);
+    }
+  };
 
   const handleEditAnswer = () => {
     editAnswer(parentQuestionId, post.postId, editBoxContent);
@@ -124,6 +145,7 @@ const PostCard = (props) => {
         </div>
     ));
   };
+
 
   return (
     <>
@@ -189,20 +211,19 @@ const PostCard = (props) => {
                 </span>
               ))}
             </span>
-
-            <div>
-              <span className="username">{post.username}</span>
-              <span className="timestamp">{formatDate(post.timestamp)}</span>
-            </div>
+          <div>
+            <span className="username">{post.username}</span>
+            <span className="timestamp">{formatDate(post.timestamp)}</span>
           </div>
-          {userIsThisAuthor ? (
-            <div className="author-panel">
-              <span onClick={() => toggleEdit(true)}className="edit-link">Edit</span>
-              <span className="delete-link">Delete</span>
-            </div>
-          ) : null}
         </div>
+        {userIsThisAuthor ? 
+          <div className="author-panel">
+              <span className="edit-link" onClick={() => handleUpdate(true)}>Edit</span>
+              <span className="delete-link" onClick={handleDelete}>Delete</span>
+          </div> : null
+        }
       </div>
+
       {!isCollapsed ?
       <div className="post-comments">
           {/* Render Comments Section */}
@@ -210,7 +231,6 @@ const PostCard = (props) => {
               <div className="comments-section">
                 <h4>Comments</h4>
                 {renderComments()}
-
                 {(
                     <div className="comment-input">
                       <textarea
@@ -260,6 +280,7 @@ const PostCard = (props) => {
           ></Button>
         </div>
     </div> : null}
+  </div>
   </div>
   </>
   );

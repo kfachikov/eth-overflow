@@ -17,6 +17,39 @@ function QuestionView() {
   const { account } = useContext(accountContext);
   const { questionId } = useParams();
 
+  const onAnswerDelete = (answerId) => {
+      setAnswers(answers.filter((answer) => answer.id !== answerId));
+  }
+
+  useEffect(() => {
+      console.log(questionId);
+      console.log(account);
+      setLoading(true);
+      getQuestionAndAnswers(questionId).then((response) => {
+          console.log(response.data)
+          let question = new PostModel()
+          question.parsePostFromJSON({...response.data, isQuestion: true, isBestAnswer: false});
+          console.log(question)
+          
+          let answers = response.data.answers.map((answer) => {
+              let answerModel = new PostModel()
+              let isBestAnswer = answer.id === response.data.selectedAnswerId;
+              answerModel.parsePostFromJSON({
+                  ...answer,
+                  tags: [],
+                  isQuestion: false, 
+                  isBestAnswer: isBestAnswer}
+              );
+              return answerModel;
+          });
+
+          setAnswers(answers);
+          setQuestion(question);
+          setLoading(false);
+      });
+  
+    }, []);
+    
   const [loading, setLoading] = useState(true);
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -170,6 +203,7 @@ function QuestionView() {
             updateBestAnswer={() => updateBestAnswer(answer.postId)}
             parentQuestionId={questionId}
             refreshParent={refreshData}
+            onAnswerDelete={onAnswerDelete}>
           ></PostCard>
         ))}
       </>
