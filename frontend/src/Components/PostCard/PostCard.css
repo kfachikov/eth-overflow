@@ -1,13 +1,13 @@
 .post-card {
-  display: flex;               /* Enables flexbox */
-  align-items: center;          /* Centers items vertically */
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Centers items vertically */
   width: 100%;
   background-color: var(--white);
 }
 
 .selected-answer-card {
-  display: flex;               /* Enables flexbox */
-  align-items: center;         /* Centers items vertically */
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Centers items vertically */
   width: 100%;
   background-color: var(--purple10);
 }
@@ -49,7 +49,11 @@
   font-size: 14px;
   overflow: hidden;
   display: -webkit-box;
-  background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  background-color: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
   /* max-height: 30px; */
   line-clamp: 3;
   -webkit-line-clamp: 3;
@@ -85,8 +89,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  justify-content: center;      /* Centers items horizontally */
-  align-items: center;          /* Centers items vertically */
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
 }
 
 .tags-box {
