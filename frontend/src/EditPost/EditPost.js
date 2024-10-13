@@ -25,9 +25,7 @@ function EditPost() {
     setTags(post.tags.map((tag) => ({ value: tag.tagId, label: tag.name })));
   }, [state]);
 
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
+  useEffect(() => {}, [tags]);
 
   // Initialize markdown-it with markdown-it-katex plugin
   const mdParser = new MarkdownIt().use(markdownItKatex);

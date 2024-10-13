@@ -34,8 +34,6 @@ export class VoteQuestionService {
             karmaQuestionPosterUpdate = -12;
         }
 
-        console.log(karmaQuestionPosterUpdate)
-
         const question = await prisma.question.findUnique({
             where: {
                 id: questionId,

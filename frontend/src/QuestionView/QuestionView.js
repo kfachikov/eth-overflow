@@ -17,19 +17,15 @@ function QuestionView() {
   const { account } = useContext(accountContext);
   const { questionId } = useParams();
 
-  const onAnswerDelete = (answerId) => {
-      setAnswers(answers.filter((answer) => answer.id !== answerId));
+  const onAnswerDelete = () => {
+      refreshData()
   }
 
   useEffect(() => {
-      console.log(questionId);
-      console.log(account);
       setLoading(true);
       getQuestionAndAnswers(questionId).then((response) => {
-          console.log(response.data)
           let question = new PostModel()
           question.parsePostFromJSON({...response.data, isQuestion: true, isBestAnswer: false});
-          console.log(question)
           
           let answers = response.data.answers.map((answer) => {
               let answerModel = new PostModel()
@@ -70,11 +66,9 @@ function QuestionView() {
   };
 
   const refreshData = () => {
-    console.log(questionId);
-    console.log(account);
     setLoading(true);
     getQuestionAndAnswers(questionId).then((response) => {
-      console.log(response.data);
+      if (!response.data) return;
       let question = new PostModel();
       question.parsePostFromJSON({
         ...response.data,
@@ -152,8 +146,8 @@ function QuestionView() {
         <div className={showCreateAnswer ? "hide" : "show"}>
           <Button
             onClick={handleCreateAnswer}
-            text="Create Answer"
-            ButtonSize={ButtonSize.LARGE}
+            text="Answer Question"
+            ButtonSize={ButtonSize.MEDIUM}
           ></Button>
         </div>
 

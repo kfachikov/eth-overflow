@@ -3,78 +3,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create 5 tags
-  const tagNames = ['JavaScript', 'TypeScript', 'Prisma', 'PostgreSQL', 'Node.js'];
-  const tags = await Promise.all(tagNames.map(name => prisma.tag.upsert({
+  const tagNames = ['Mathematics', 'Physics', 'Computer Science'];
+  await Promise.all(tagNames.map(name => prisma.tag.upsert({
     where: { name },
     update: {},
     create: { name },
   })));
-
-  // Create 10 accounts (users)
-  const accounts = await Promise.all(Array.from({ length: 10 }).map((_, i) => prisma.account.upsert({
-    where: { email: `user${i + 1}@example.com` },
-    update: {},
-    create: {
-      email: `user${i + 1}@example.com`,
-      name: `User ${i + 1}`,
-      username: `user${i + 1}`,
-      karma: Math.floor(Math.random() * 100),
-    },
-  })));
-
-  // Create 15 questions, each with 0-2 answers and 1-5 tags
-  for (let i = 1; i <= 15; i++) {
-    const question = await prisma.question.create({
-      data: {
-        title: `Question ${i}`,
-        content: `This is the content of question ${i}.`,
-        author: { connect: { id: accounts[Math.floor(Math.random() * accounts.length)].id } },
-        tags: {
-          connect: tags
-            .sort(() => 0.5 - Math.random())
-            .slice(0, Math.floor(Math.random() * 5) + 1)
-            .map(tag => ({ id: tag.id })),
-        },
-      },
-    });
-
-    // Create 0-2 answers for the question
-    const answerCount = Math.floor(Math.random() * 3);
-    for (let j = 1; j <= answerCount; j++) {
-      const answer = await prisma.answer.create({
-        data: {
-          content: `This is answer ${j} for question ${i}.`,
-          author: { connect: { id: accounts[Math.floor(Math.random() * accounts.length)].id } },
-          question: { connect: { id: question.id } },
-        },
-      });
-
-      // Randomly vote on the answer
-      const votesOnAnswerCount = Math.floor(Math.random() * accounts.length); // Some users might vote on this answer
-      for (let k = 0; k < votesOnAnswerCount; k++) {
-        await prisma.votesOnAnswer.create({
-          data: {
-            upvote: Math.random() > 0.5, // 50% chance of upvote or downvote
-            account: { connect: { id: accounts[k].id } },
-            answer: { connect: { id: answer.id } },
-          },
-        });
-      }
-    }
-
-    // Randomly vote on the question
-    const votesOnQuestionCount = Math.floor(Math.random() * accounts.length); // Some users might vote on this question
-    for (let k = 0; k < votesOnQuestionCount; k++) {
-      await prisma.votesOnQuestion.create({
-        data: {
-          upvote: Math.random() > 0.5, // 50% chance of upvote or downvote
-          account: { connect: { id: accounts[k].id } },
-          question: { connect: { id: question.id } },
-        },
-      });
-    }
-  }
 }
 
 main()

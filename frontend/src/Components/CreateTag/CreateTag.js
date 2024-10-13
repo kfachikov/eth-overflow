@@ -41,7 +41,6 @@ const CreateTag = ({ onChange, tags }) => {
   // Handle enter press to either select or create new tag
   const handleKeyDown = async (event) => {
     if (event.key === "Enter" && inputValue) {
-      console.log("here");
       const existingTag = options.find(
         (option) => option.label.toLowerCase() === inputValue.toLowerCase()
       );
@@ -73,8 +72,6 @@ const CreateTag = ({ onChange, tags }) => {
   };
 
   const customFilter = (option, inputValue) => {
-    console.log("first" + option.label);
-    console.log(inputValue);
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
 

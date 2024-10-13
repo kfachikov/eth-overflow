@@ -36,14 +36,16 @@
   }
   
   #account-name {
-    font-size: 2em;
-    margin-right: 10px; /* Adds spacing between the username and karma */
+    font-size: 20px;
+    margin-right: 30px; /* Adds spacing between the username and karma */
+    white-space: nowrap;
+    margin-bottom: 4px;
   }
 
   #account-karma {
-    padding-top: 7px;
-    font-size: 1.5em;
-    margin-right: 10px; /* Adds spacing between the karma and the logout icon */
+    font-size: 15px;
+    margin-right: 4px; /* Adds spacing between the karma and the logout icon */
+    margin-bottom: 4px;
   }
   
   #account-reputation {
@@ -55,15 +57,13 @@
   }
 
   .logout-icon {
-    padding-top: 12px;
     cursor: pointer; /* Changes the cursor to a pointer on hover */
     height: 1.5em;
     width: 1.5em;
   }
 
   .reputation-icon {
-    padding-top: 12px;
-    height: 1.5em;
-    width: 1.5em;
+    height: 1.2em;
+    width: 1.2em;
     margin-right: 5px; /* Adds spacing between the icon and the text */
   }
