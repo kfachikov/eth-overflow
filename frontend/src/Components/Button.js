@@ -15,9 +15,9 @@ const ButtonSize = Object.freeze({
  * button.
  * @param {ButtonSize} [size=ButtonSize.MEDIUM] The size of the button to render.
  */
-function Button({text, onClick, isDelete = false, size=ButtonSize.SMALL}) {
+function Button({text, onClick, isDelete = false, size=ButtonSize.SMALL, disabled=false}) {
     var className = `button ${size} ${isDelete ? 'delete' : ''}`
-    return <button className={className} onClick={onClick}>{text}</button>
+    return <button className={className} onClick={onClick} disabled={disabled}>{text}</button>
 }
 
 export default Button

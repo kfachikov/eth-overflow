@@ -24,6 +24,7 @@
 
 .content-input {
   min-height: 200px;
+  width: calc(100% - 12px);
 }
 
 .content-input {
