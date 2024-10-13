@@ -18,12 +18,13 @@ const Header = () => {
                 {/* Display account name and reputation */}
                 {!account.account ? <div id="loading-spinner"/> :
                     <div id="account-container-small">
+                        <span id="account-reputation">
+                            <span id="account-karma">{account.account.karma}</span>
+                            <img className="reputation-icon" src="../../reputation.svg" alt="Reputation" />
+            
+                        </span>
                         <span id="account-name">
                             {account.account.name}
-                        </span>
-                        <span id="account-reputation">
-                            <img className="reputation-icon" src="../../reputation.svg" alt="Reputation" />
-                            <span id="account-karma">{account.account.karma}</span>
                         </span>
                         <div id="account-logout">
                             <img className="logout-icon" src="../../logout_icon.svg" alt="Logout" />

@@ -119,8 +119,8 @@ function QuestionView() {
         <div className={showCreateAnswer ? "hide" : "show"}>
           <Button
             onClick={handleCreateAnswer}
-            text="Create Answer"
-            ButtonSize={ButtonSize.LARGE}
+            text="Answer Question"
+            ButtonSize={ButtonSize.MEDIUM}
           ></Button>
         </div>
 

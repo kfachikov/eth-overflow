@@ -8,6 +8,7 @@
     display: inline-block;
     cursor: pointer;
     transition: 0.15s;
+    white-space: nowrap;
 }
 
 .button:hover {
