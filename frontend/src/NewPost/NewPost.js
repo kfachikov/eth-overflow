@@ -13,7 +13,6 @@ function NewPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
-  const [notify, setNotify] = useState(true);
   const navigate = useNavigate();
 
   // Initialize markdown-it with markdown-it-katex plugin
@@ -71,7 +70,7 @@ function NewPost() {
       </div>
 
       <div className="form-group preview">
-        <h3>Preview</h3>
+        <span>Preview</span>
         <div
           className="markdown-preview"
           dangerouslySetInnerHTML={{ __html: mdParser.render(content) }}
@@ -80,8 +79,8 @@ function NewPost() {
 
       <div className="form-group">
         <div className="notification-confirmation">
-          <input type="checkbox" defaultChecked />I want to receive
-          notifications when someone answers my question.
+          <input className="checkbox-class" type="checkbox" defaultChecked />I want to receive
+          notifications when someone answers my question!
         </div>
       </div>
 

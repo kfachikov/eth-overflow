@@ -105,8 +105,8 @@ const HomePage = (props) => {
 
           {/* Pagination Controls */}
           <div className="pagination-controls">
-            <button onClick={handlePrevious} disabled={offset === 0}>Previous</button>
-            <button onClick={handleNext} disabled={questions.length < pageSize}>Next</button>
+            <Button text="Previous" onClick={handlePrevious} size={ButtonSize.MEDIUM} disabled={offset === 0}/>
+            <Button text="Next" onClick={handleNext} size={ButtonSize.MEDIUM} disabled={questions.length < pageSize}/>
           </div>
         </div>
       )}

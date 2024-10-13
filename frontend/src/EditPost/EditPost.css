@@ -5,28 +5,46 @@
   gap: 1rem;
 }
 
+#title {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#title:focus {
+  outline: 2px solid var(--purple60);
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
-}
-
-.form-control {
-  padding: 0.5rem;
-  font-size: 1rem;
+  row-gap: 5px;
 }
 
 .content-input {
   min-height: 200px;
 }
 
-.preview {
+.content-input {
+  font-size: 16px;
   border: 1px solid #ccc;
-  padding: 1rem;
+  border-radius: 4px;
+}
+
+.content-input:focus {
+  outline: 2px solid var(--purple60);
+}
+
+.preview {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .markdown-preview {
-  border: 1px solid #ddd;
-  padding: 1rem;
+  border: 1px solid #ccc;
+  padding: 10px;
   background: #f9f9f9;
 }
 
@@ -38,6 +56,12 @@
 .form-actions {
   display: flex;
   justify-content: space-between;
+}
+
+.checkbox-class {
+  accent-color: var(--purple60);
+  width: 18px;
+  height: 18px;
 }
 
 textarea {

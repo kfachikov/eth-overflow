@@ -15,7 +15,6 @@ function EditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
-  const [notify, setNotify] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -86,7 +85,7 @@ function EditPost() {
       </div>
 
       <div className="form-group preview">
-        <h3>Preview</h3>
+        <span>Preview</span>
         <div
           className="markdown-preview"
           dangerouslySetInnerHTML={{ __html: mdParser.render(content) }}
@@ -95,20 +94,20 @@ function EditPost() {
 
       <div className="form-group">
         <div className="notification-confirmation">
-          <input type="checkbox" defaultChecked />I want to receive
-          notifications when someone answers my question.
+          <input className="checkbox-class" type="checkbox" defaultChecked />I want to receive
+          notifications when someone answers my question!
         </div>
       </div>
 
       <div className="form-actions">
         <Button
-          text="Cancel"
+          text="Discard Changes"
           onClick={handleCancel}
           isDelete={true}
           size={ButtonSize.MEDIUM}
         ></Button>
         <Button
-          text="Post"
+          text="Save"
           onClick={handlePost}
           size={ButtonSize.MEDIUM}
         ></Button>
