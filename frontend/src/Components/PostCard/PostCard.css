@@ -156,3 +156,15 @@
 .delete-link:hover {
   color: darkred;
 }
+
+.clickable-question {
+  cursor: pointer;
+}
+
+.clickable-question:hover {
+  background-color: var(--gray10);
+}
+
+.clickable-question:active {
+  background-color: var(--gray20);
+}

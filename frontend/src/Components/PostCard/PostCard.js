@@ -130,7 +130,7 @@ const PostCard = (props) => {
         ) : null}
       </div>
 
-      <div className="post-body">
+      <div onClick={isCollapsed ? () => navigate('/question/' + post.postId) : () => {}} className={"post-body" + (isCollapsed ? " clickable-question" : "")}>
         {post.isQuestion ? <h3 className="post-title">{post.title}</h3> : <></>}
         {post.isQuestion && isCollapsed ? (
           <p

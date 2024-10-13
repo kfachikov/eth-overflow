@@ -158,7 +158,7 @@ function QuestionView() {
           </div>
         </div>
 
-        <h4>Answers:</h4>
+        {answers.length === 0 ? <h4>There are still no answers to this question</h4> : <h4>Answers:</h4>}
         {answers.sort(compareAnswers).map((answer, index) => (
           <PostCard
             key={index}

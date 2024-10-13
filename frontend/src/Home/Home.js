@@ -93,6 +93,7 @@ const HomePage = (props) => {
                   key={question.id} 
                   post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })}
                   thisVote={question.vote}
+                  isCollapsed={true}
                 />
               );
             })
