@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
-import { voteQuestion } from "../../services/questionService";
-import { deleteAnswer, voteAnswer } from "../../services/answerService";
+import { deleteAnswer } from "../../services/answerService";
 import "./PostCard.css";
+import {createCommentQuestion, getQuestionAndAnswers, voteQuestion} from "../../services/questionService";
+import {createCommentAnswer, getComments, voteAnswer } from "../../services/answerService";
 import { useNavigate } from "react-router-dom";
 
 import { deleteQuestion } from '../../services/questionService';
@@ -30,6 +31,7 @@ const PostCard = (props) => {
   const [voteState, setVoteState] = useState(thisVote);
   const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
   const [score, setScore] = useState(post.score);
+  const [comments, setComments] = useState(post.comments);
 
   const mdParser = new MarkdownIt().use(markdownItKatex);
 
@@ -69,7 +71,7 @@ const PostCard = (props) => {
         alert("Failed to delete the answer!");
       });
     }
-  }
+  };
 
   const handleUpdate = () => {
     if (post.isQuestion) {
@@ -77,7 +79,44 @@ const PostCard = (props) => {
       console.log(post);
       navigate(`/question/${post.postId}/edit`, { state: JSON.stringify(post) });
     }
-  }
+  };
+
+  const [comment, setComment] = useState(''); // State to hold comment input
+
+  const handleCommentSubmit = () => {
+    if (comment.trim()) {
+      // If comment is not empty or only spaces
+      if (post.isQuestion) {
+        createCommentQuestion(post.postId, comment).then(() => {
+          setComment('');
+
+          getQuestionAndAnswers(post.postId).then((response) => {
+            setComments(response.data.comments);
+          })
+        })
+      } else {
+        createCommentAnswer(post.postId, comment).then(() => {
+          setComment('');
+
+          getComments(post.postId).then((response) => {
+            setComments(response.data);
+          })
+        })
+      }
+    }
+  };
+
+
+  const renderComments = () => {
+    return comments.map((comment, index) => (
+        <div key={index} className="comment">
+          <span className="comment-username">{comment.author.username}</span>
+          <span className="comment-timestamp">{formatDate(comment.createdAt)}</span>
+          <p className="comment-content">{comment.content}</p>
+        </div>
+    ));
+  };
+
 
   return (
     <div
@@ -87,35 +126,37 @@ const PostCard = (props) => {
         (isBestAnswer ? " selected-answer-card" : "")
       }
     >
-      <div className="vote-buttons">
-        <VoteButton
-          isUpvote={true}
-          onClick={() =>
-            handleVote(voteState !== Vote.UPVOTE ? Vote.UPVOTE : Vote.NEUTRAL)
-          }
-          isClicked={voteState === Vote.UPVOTE} // Active if upvoted
-        />
-        <div className="score">{score}</div>
-        <VoteButton
-          isUpvote={false}
-          onClick={() =>
-            handleVote(
-              voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL
+      <div className="post-card-body">
+
+        <div className="vote-buttons">
+          <VoteButton
+            isUpvote={true}
+            onClick={() =>
+              handleVote(voteState !== Vote.UPVOTE ? Vote.UPVOTE : Vote.NEUTRAL)
+            }
+            isClicked={voteState === Vote.UPVOTE} // Active if upvoted
+          />
+          <div className="score">{score}</div>
+          <VoteButton
+            isUpvote={false}
+            onClick={() =>
+              handleVote(
+                voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL
+              )
+            }
+            isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
+          />
+          {userIsQuestionAuthor ? (
+              isBestAnswer
+                ? <div onClick={handleSelectBest} className="selected-checkmark enabled">✔</div>
+                : <div onClick={handleSelectBest} className="unselected-checkmark enabled">✔</div>
+            ) : (
+              isBestAnswer
+                ? <div className="selected-checkmark">✔</div>
+                : null
             )
           }
-          isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
-        />
-        {userIsQuestionAuthor ? (
-            isBestAnswer
-              ? <div onClick={handleSelectBest} className="selected-checkmark enabled">✔</div>
-              : <div onClick={handleSelectBest} className="unselected-checkmark enabled">✔</div>
-          ) : (
-            isBestAnswer
-              ? <div className="selected-checkmark">✔</div>
-              : null
-          ) 
-        }
-      </div>
+        </div>
 
       <div className="post-body">
         {post.isQuestion ? <h3 className="post-title">{post.title}</h3> : <></>}
@@ -152,7 +193,29 @@ const PostCard = (props) => {
           </div> : null
         }
       </div>
+
+      <div className="post-comments">
+        {/* Render Comments Section */}
+        {!isCollapsed && (
+            <div className="comments-section">
+              <h4>Comments</h4>
+              {renderComments()}
+
+              {(
+                  <div className="comment-input">
+                    <textarea
+                        placeholder="Add a comment..."
+                        value={comment} // Controlled input
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                    <button onClick={handleCommentSubmit}>Post Comment</button>
+                  </div>
+              )}
+            </div>
+        )}
+      </div>
     </div>
+  </div>
   );
 };
 
