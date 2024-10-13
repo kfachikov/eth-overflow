@@ -112,20 +112,18 @@
 .unselected-checkmark {
   font-size: 42px;
   color: var(--purple40);
-  cursor: pointer;
-}
-
-.unselected-checkmark:hover {
-  color: var(--purple60);
 }
 
 .selected-checkmark {
   font-size: 42px;
   color: var(--purple);
-  cursor: pointer;
 }
 
-.selected-checkmark:hover {
+.enabled {
+  cursor: pointer
+}
+
+.enabled:hover {
   color: var(--purple80);
 }
 

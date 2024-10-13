@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import VoteButton from '../VoteButton/VoteButton';
 import './PostCard.css';
 import {voteQuestion} from "../../services/questionService";
 import {voteAnswer} from "../../services/answerService";
+import {accountContext} from "../../contexts/userContext";
 
 const Vote = Object.freeze({
   UPVOTE: 1,
@@ -11,7 +12,7 @@ const Vote = Object.freeze({
 })
 
 const PostCard = (props) => {
-  const { post, thisVote, isCollapsed } = props;
+  const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor } = props;
   
   const [voteState, setVoteState] = useState(thisVote);
   const [isBestAnswer, setIsBestAnswer] = useState(post.isBestAnswer || false);
@@ -58,13 +59,16 @@ const PostCard = (props) => {
           onClick={() => handleVote(voteState !== Vote.DOWNVOTE ? Vote.DOWNVOTE : Vote.NEUTRAL)}
           isClicked={voteState === Vote.DOWNVOTE} // Active if downvoted
         />
-        {!post.isQuestion && (
-            isBestAnswer ? (
-                <div onClick={handleSelectBest} className="selected-checkmark">✔</div>
-            ) : (
-                <div onClick={handleSelectBest} className="unselected-checkmark">✔</div>
-            )
-        )}
+        {userIsQuestionAuthor ? (
+            isBestAnswer
+              ? <div onClick={handleSelectBest} className="selected-checkmark enabled">✔</div>
+              : <div onClick={handleSelectBest} className="unselected-checkmark enabled">✔</div>
+          ) : (
+            isBestAnswer
+              ? <div className="selected-checkmark">✔</div>
+              : null
+          ) 
+        }
       </div>
 
       <div className="post-body">
@@ -86,10 +90,12 @@ const PostCard = (props) => {
             <span className="timestamp">{post.timestamp}</span>
           </div>
         </div>
-        <div className="author-panel">
-            <span className="edit-link">Edit</span>
-            <span className="delete-link">Delete</span>
-          </div>
+        {userIsThisAuthor ? 
+          <div className="author-panel">
+              <span className="edit-link">Edit</span>
+              <span className="delete-link">Delete</span>
+          </div> : null
+        }
       </div>
     </div>
   );

@@ -85,7 +85,12 @@ const HomePage = () => {
           {questions.length > 0 ? (
             questions.map((question) => {
               return (
-                <PostCard key={question.id} post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })} />
+                <PostCard 
+                  key={question.id}
+                  post={parsePostFromJSON({...question, isQuestion: true, isBestAnswer: false })}
+                  userIsQuestionAuthor={false}
+                  userIsThisAuthor={false}
+                />
               );
             })
           ) : (
