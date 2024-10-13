@@ -14,6 +14,10 @@ function QuestionView() {
     const [question, setQuestion] = useState(null);
     const [answers, setAnswers] = useState([]);
 
+    const onAnswerDelete = (answerId) => {
+        setAnswers(answers.filter((answer) => answer.id !== answerId));
+    }
+
     useEffect(() => {
         console.log(questionId);
         console.log(account);
@@ -59,7 +63,8 @@ function QuestionView() {
                     post={answer} 
                     thisVote={false} 
                     userIsQuestionAuthor={account.id === question.authorId}
-                    userIsThisAuthor={account.id === answer.authorId}>
+                    userIsThisAuthor={account.id === answer.authorId}
+                    onAnswerDelete={onAnswerDelete}>
                 </PostCard>
             )}
         </>

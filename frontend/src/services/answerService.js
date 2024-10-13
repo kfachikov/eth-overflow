@@ -6,3 +6,7 @@ export const voteAnswer = async (answerId, voteState) => {
     }
     return await httpService.put(`/answers/${answerId}/vote`, data)
 }
+
+export const deleteAnswer = async (answerId) => {
+    return await httpService.delete(`/answers/${answerId}`);
+}

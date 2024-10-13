@@ -2,10 +2,12 @@ import React, { useContext,useEffect, useState } from "react";
 import VoteButton from "../VoteButton/VoteButton";
 import "./PostCard.css";
 import { voteQuestion } from "../../services/questionService";
-import { voteAnswer } from "../../services/answerService";
+import { deleteAnswer, voteAnswer } from "../../services/answerService";
 import {accountContext} from "../../contexts/userContext";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
+
+import { deleteQuestion } from '../../services/questionService';
 
 import MarkdownIt from "markdown-it";
 import markdownItKatex from "markdown-it-katex"; // For rendering TeX formulas
@@ -23,7 +25,7 @@ const formatDate = (str) => str.replace(
 );
 
 const PostCard = (props) => {
-  const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor } = props;
+  const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor, onAnswerDelete } = props;
   const navigate = useNavigate();
 
   const [voteState, setVoteState] = useState(thisVote);
@@ -54,6 +56,21 @@ const PostCard = (props) => {
     }
   }, [voteState]);
 
+  const handleDelete = () => {
+    if (post.isQuestion) {
+      deleteQuestion(post.postId).then(() => {
+        navigate('/home');
+      }).catch((error) => {
+        alert("Failed to delete the question!");
+      }); 
+    } else {
+      deleteAnswer(post.postId).then(() => {
+        onAnswerDelete(post.postId);
+      }).catch((error) => {
+        alert("Failed to delete the answer!");
+      });
+    }
+  }
   return (
     <div
       className={
@@ -123,7 +140,7 @@ const PostCard = (props) => {
         {userIsThisAuthor ? 
           <div className="author-panel">
               <span className="edit-link">Edit</span>
-              <span className="delete-link">Delete</span>
+              <span className="delete-link" onClick={handleDelete}>Delete</span>
           </div> : null
         }
       </div>

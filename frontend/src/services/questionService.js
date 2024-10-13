@@ -22,3 +22,7 @@ export const voteQuestion = async (questionId, voteState) => {
     }
     return await httpService.put(`/questions/${questionId}/vote`, data)
 }
+
+export const deleteQuestion = async (questionId) => {
+    return await httpService.delete(`/questions/${questionId}`);
+}
