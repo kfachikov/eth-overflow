@@ -159,7 +159,6 @@
   color: darkred;
 }
 
-<<<<<<< HEAD
 .clickable-question {
   cursor: pointer;
 }
@@ -171,7 +170,7 @@
 .clickable-question:active {
   background-color: var(--gray20);
 }
-=======
+
 .post-card-body {
   display: flex;
   flex-direction: row;
@@ -227,4 +226,3 @@
   text-wrap: nowrap;
   cursor: pointer;
 }
->>>>>>> origin/main
