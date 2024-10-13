@@ -228,8 +228,8 @@ const PostCard = (props) => {
           </div> : null
         }
       </div>
-
-      {!isCollapsed ?
+    </div>
+    {!isCollapsed ?
       <div className="post-comments">
           {/* Render Comments Section */}
           {!isCollapsed && (
@@ -285,7 +285,6 @@ const PostCard = (props) => {
           ></Button>
         </div>
     </div> : null}
-  </div>
   </div>
   </>
   );

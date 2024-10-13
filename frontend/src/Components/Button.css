@@ -2,6 +2,7 @@
     background-color: var(--purple);
     color: white;
     font-family: Arial;
+    border: none;
     text-align: center;
     text-decoration: none;
     display: inline-block;
