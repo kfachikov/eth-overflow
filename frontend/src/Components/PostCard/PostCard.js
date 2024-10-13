@@ -17,6 +17,11 @@ const Vote = Object.freeze({
   DOWNVOTE: -1,
 });
 
+const formatDate = (str) => str.replace(
+  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}).*$/,
+  '$1-$2-$3 $4:$5'
+);
+
 const PostCard = (props) => {
   const { post, thisVote, isCollapsed, userIsQuestionAuthor, userIsThisAuthor } = props;
   const navigate = useNavigate();
@@ -112,7 +117,7 @@ const PostCard = (props) => {
 
           <div>
             <span className="username">{post.username}</span>
-            <span className="timestamp">{post.timestamp}</span>
+            <span className="timestamp">{formatDate(post.timestamp)}</span>
           </div>
         </div>
         {userIsThisAuthor ? 

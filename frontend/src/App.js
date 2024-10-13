@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import NewPost from "./NewPost/NewPost";
 import QuestionView from "./QuestionView/QuestionView";
 import UserProfile from "./UserProfile/UserProfile";
@@ -27,6 +27,7 @@ function App() {
       <accountContext.Provider value={{ account }}>
         <Header/>
         <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/newpost" element={<NewPost />} />
           <Route path="/question/create" element={<NewPost />} />
