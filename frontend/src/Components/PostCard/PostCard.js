@@ -34,8 +34,7 @@ const PostCard = (props) => {
         setScore(response.data.score)
       });
     } else {
-      // TODO: check whether answerId exists
-      voteAnswer(post.postId, post.answerId, voteState).then((response) => {
+      voteAnswer(post.postId, voteState).then((response) => {
         setScore(response.data.score)
       });
     }

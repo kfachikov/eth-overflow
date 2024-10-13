@@ -12,7 +12,7 @@ export class QuestionService {
             ? tags.map(tagId => ({ id: tagId }))
             : undefined;
 
-        return prisma.question.create({
+        return await prisma.question.create({
             data: {
                 authorId: userId,
                 ...rest,
@@ -32,7 +32,7 @@ export class QuestionService {
             }
             : undefined;
 
-        return prisma.question.update({
+        return await prisma.question.update({
             where: { id: questionId },
             data: {
                 ...rest,
@@ -42,15 +42,15 @@ export class QuestionService {
     }
 
     async deleteQuestion(questionId: number) {
-        return prisma.question.delete({
+        return await prisma.question.delete({
             where: {
                 id: questionId,
             },
         });
     }
 
-    async getAllQuestions(search: string, tags: string[], offset: number, limit: number, orderByField: string) {
-        return prisma.question.findMany({
+    async getAllQuestions(accountId: number, search: string, tags: string[], offset: number, limit: number, orderByField: string) {
+        return await prisma.question.findMany({
             where: {
                 OR: [
                     {
@@ -82,12 +82,25 @@ export class QuestionService {
             include: {
                 tags: true,
                 author: true,
+                votesOnQuestion: {
+                    where: {
+                        accountId,
+                    },
+                }
             }
+        }).then((questions) => {
+            return questions.map((question) => {
+                const vote = question.votesOnQuestion;
+                return {
+                    ...question,
+                    isVoted: vote.length > 0,
+                }
+            })
         });
     }
 
     async getQuestionWithAnswers(questionId: number) {
-        return prisma.question.findUnique({
+        return await prisma.question.findUnique({
             where: { id: questionId },
             include: {
                 answers: {
@@ -102,7 +115,7 @@ export class QuestionService {
     }
 
     async getQuestionsWithAnswers() {
-        return prisma.question.findMany({
+        return await prisma.question.findMany({
             include: {
                 answers: {
                     include: {
@@ -121,8 +134,10 @@ export class QuestionService {
                 id: questionId,
             }
         });
+
         const finalScore = question!.score + scoreChange;
-        return prisma.question.update({
+        
+        return await prisma.question.update({
             where: {
                 id: questionId,
             },
@@ -133,7 +148,7 @@ export class QuestionService {
     }
 
     async selectBestAnswer(questionId: number, answerId: number) {
-        return prisma.question.update({
+        return await prisma.question.update({
             where: {
                 id: questionId,
             },

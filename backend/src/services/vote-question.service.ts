@@ -15,10 +15,10 @@ export class VoteQuestionService {
             },
         })
 
-        const initialScore = vote ? vote.upvote ? 1 : -1 : 0;
+        const initialScore = vote ? (vote.upvote ? 1 : -1) : 0;
         const finalScore = voteDto.score
 
-        if (finalScore == 0) {
+        if (finalScore == 0 && vote) {
             await prisma.votesOnQuestion.delete({
                 where: {
                     accountId_questionId: {
@@ -39,7 +39,7 @@ export class VoteQuestionService {
                     upvote: finalScore == 1,
                 }
             })
-        } else {
+        } else if (finalScore != 0) {
             await prisma.votesOnQuestion.create({
                 data: {
                     accountId: userId,

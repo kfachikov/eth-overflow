@@ -27,13 +27,4 @@ export class AnswerController {
     async deleteAnswer(@Param('answerId') answerId: number) {
         return await this.answerService.deleteAnswer(answerId);
     }
-
-    @Put('/:answerId/vote')
-    async voteForAnswer(@Param('answerId') answerId: number, @Body() voteDto: VoteDto, @Req() req: Request) {
-        // @ts-ignore
-        const userId = req.userId;
-        const change = await this.voteAnswerService.voteAnswer(userId, answerId, voteDto);
-
-        return await this.answerService.updateScore(answerId, change);
-    }
 }
